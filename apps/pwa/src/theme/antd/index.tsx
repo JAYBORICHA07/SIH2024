@@ -13,16 +13,18 @@ import {
 import { ThemeMode } from "../../types/enum";
 
 type Props = {
+  // biome-ignore lint/correctness/noUndeclaredVariables: <explanation>
   children: React.ReactNode;
 };
+// biome-ignore lint/style/noDefaultExport: <explanation>
 export default function AntdConfig({ children }: Props) {
-  const { themeMode, themeColorPresets } = useSettings();
+  const { themeMode } = useSettings();
 
   const algorithm =
     themeMode === ThemeMode.Light
       ? theme.defaultAlgorithm
       : theme.darkAlgorithm;
-  const colorPrimary = colorPrimarys[themeColorPresets];
+  const colorPrimary = colorPrimarys["purple"];
 
   return (
     <ConfigProvider

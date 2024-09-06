@@ -20,6 +20,7 @@ import { useThemeToken } from "../../theme/hooks";
 /**
  * App Setting
  */
+// biome-ignore lint/style/noDefaultExport: <explanation>
 export default function SettingButton() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const {
@@ -343,27 +344,6 @@ export default function SettingButton() {
               )}
             </Card>
           </div>
-
-          {/* theme presets */}
-          {/* <div>
-            <div className="mb-3 text-base font-semibold" style={{ color: colorTextSecondary }}>
-              Presets
-            </div>
-            <div className="grid grid-cols-3 gap-x-4 gap-y-3">
-              {Object.entries(colorPrimarys).map(([preset, color]) => (
-                <Card
-                  key={preset}
-                  className="flex h-14 w-full cursor-pointer items-center justify-center"
-                  style={{ backgroundColor: themeColorPresets === preset ? `${color}14` : '' }}
-                  onClick={() => setThemeColorPresets(preset as ThemeColorPresets)}
-                >
-                  <div style={{ color }}>
-                    <MdCircle style={{ fontSize: themeColorPresets === preset ? 24 : 12 }} />
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </div> */}
 
           {/* Page config */}
           <div>

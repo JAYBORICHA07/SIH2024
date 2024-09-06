@@ -18,6 +18,5 @@ export const userController = router({
   }),
   create: publicProcedure.mutation(({ input, ctx: { req } }) => {
     req.server.log.debug({ input });
-    // return db.user.create(input);
   }),
 });

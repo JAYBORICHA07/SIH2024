@@ -9,7 +9,7 @@ export const AuthSuccess: React.FC = () => {
   const router = useRouter();
   const { exp } = useUserToken();
   const { setUserInfo, setUserToken } = useUserActions();
-  const userSession = trpc.user.useQuery(undefined, {
+  const userSession = trpc.currentUser.useQuery(undefined, {
     retry: 2,
     staleTime: Infinity,
     refetchOnWindowFocus: true,
@@ -37,7 +37,11 @@ export const AuthSuccess: React.FC = () => {
         title="Failed to Authenticate!"
         subTitle="Please try again."
         extra={[
-          <Button type="primary" onClick={() => router.replace("/auth/login")}>
+          <Button
+            key={"sucess button"}
+            type="primary"
+            onClick={() => router.replace("/auth/login")}
+          >
             Login
           </Button>,
         ]}

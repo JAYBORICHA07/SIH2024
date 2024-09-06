@@ -3,7 +3,6 @@ import helmet from "@fastify/helmet";
 import sensible from "@fastify/sensible";
 import { app } from "./app";
 import { env } from "./configs/env.config";
-import { googleAuth } from "./auth/google-auth";
 
 export const server = app;
 
@@ -17,7 +16,7 @@ server
     credentials: true,
   })
   .register(helmet)
-  .register(sensible)
+  .register(sensible);
 
 // Run the server!
 server.listen({ port: port, host: "0.0.0.0" }, function (err, address) {

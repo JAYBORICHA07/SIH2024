@@ -39,6 +39,7 @@ const colorPrimarys: {
   blue: "#2065D1",
   orange: "#FDA92D",
   red: "#FF3030",
+  pink: "#ef5265",
 };
 
 const themeModeToken: Record<"dark" | "light", ThemeConfig> = {

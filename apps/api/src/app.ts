@@ -9,7 +9,7 @@ import { env } from "./configs/env.config";
 import { logsConfig } from "./configs/logger.config";
 import { trpcContext } from "./context.trpc";
 import { ApiRouter, trpcRouter } from "./router.trpc";
-import { googleAuth } from "./auth/google-auth";
+import { Auth } from "./auth/google-auth";
 
 export const app = fastify({
   logger: logsConfig[env.ENVIRONMENT],
@@ -34,8 +34,10 @@ app.setErrorHandler(function (error, _request, reply) {
   }
 });
 
-app.register(cookiePlugin).register(fastifyJwt, { secret: env.JWT_SECRET as string }).register(googleAuth)
-
+app
+  .register(cookiePlugin)
+  .register(fastifyJwt, { secret: env.JWT_SECRET as string })
+  .register(Auth);
 
 app.register(fastifyTRPCPlugin, {
   prefix: "/v1",

@@ -23,6 +23,7 @@ export type NavbarFields = {
   showInNav?: boolean; // New field to control visibility in nav
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 const PageWrapper = ({ component }: PageProps) => {
   return <AuthGuard>{component}</AuthGuard>;
 };
@@ -46,7 +47,7 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
     ],
   },
   {
-    path: "/dashboard",
+    path: "/adminPanel",
     element: <PageWrapper component={<DashboardLayout />} />,
     errorElement: <ErrorPage />,
     showInNav: true,
@@ -58,6 +59,29 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
         lazy: async () => {
           const { Workbench } = await import("../pages/dashboard/workbench");
           return { element: <PageWrapper component={<Workbench />} /> };
+        },
+        icon: "ph:chart-pie-slice-duotone",
+        navPath: "/adminPanel",
+        navLabel: "Admin Panel",
+        title: "Admin Panel",
+        subheader: "Admin Panel",
+        showInNav: true,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <PageWrapper component={<DashboardLayout />} />,
+    errorElement: <ErrorPage />,
+    showInNav: true,
+    children: [
+      {
+        caseSensitive: false,
+        index: true,
+        path: "/dashboard",
+        lazy: async () => {
+          const { Home } = await import("../pages/home/Home.page");
+          return { element: <PageWrapper component={<Home />} /> };
         },
         icon: "ph:chart-pie-slice-duotone",
         navPath: "/dashboard",
@@ -78,14 +102,28 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
         path: "/auth/login",
         lazy: async () => {
           const { Login } = await import("../pages/auth/Login.page");
-          return { element: <Login />  };
+          return { element: <Login /> };
         },
         navPath: "/auth/login",
         navLabel: "Login",
         title: "Login",
         subheader: "Login",
         showInNav: false,
-      }
+      },
+      {
+        caseSensitive: false,
+        index: true,
+        path: "/auth/success",
+        lazy: async () => {
+          const { AuthSuccess } = await import("../pages/auth/Success.page");
+          return { element: <AuthSuccess /> };
+        },
+        navPath: "/auth/success",
+        navLabel: "Login Sucess",
+        title: "Login Sucess",
+        subheader: "Login Sucess",
+        showInNav: false,
+      },
     ],
   },
   {

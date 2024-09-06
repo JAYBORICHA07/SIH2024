@@ -23,4 +23,5 @@ export enum ThemeColorPresets {
   Blue = "blue",
   Orange = "orange",
   Red = "red",
+  Pink = "pink",
 }
