@@ -28,6 +28,7 @@ export const AuthSuccess: React.FC = () => {
       setUserInfo(userSession.data);
       router.replace("/");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router, userSession.isLoading]);
 
   if (userSession.isError) {

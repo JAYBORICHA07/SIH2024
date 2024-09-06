@@ -1,93 +1,123 @@
-import { Button, Form, Input } from "antd";
-
-import { ReturnButton } from "./components/ReturnButton";
+import { Button, Flex, Form, Input, message, Typography } from "antd";
 import {
   LoginStateEnum,
   useLoginStateContext,
 } from "./providers/LoginStateProvider";
+import { useForm } from "antd/es/form/Form";
+import { useRouter } from "@/router/hooks";
 
-function RegisterForm() {
-  const { loginState, backToLogin } = useLoginStateContext();
-  if (loginState !== LoginStateEnum.REGISTER) return null;
+interface LoginFormType {
+  email: string;
+  userName: string;
+  password: string;
+  role: string;
+}
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onFinish = async (values: any) => {
-    console.log("Received values of form: ", values);
-    backToLogin();
+export function RegisterForm() {
+  const { loginState } = useLoginStateContext();
+  const [form] = useForm<LoginFormType>();
+  const router = useRouter();
+
+  if (loginState !== LoginStateEnum.LOGIN) {
+    return null;
+  }
+  if (loginState !== LoginStateEnum.LOGIN) {
+    return null;
+  }
+  const onFinish = async (values: LoginFormType) => {
+    console.info(values);
+    await fetch(import.meta.env.VITE_BE_URL + "/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.info(data);
+        router.replace("/auth/success");
+      })
+      .catch((err) => message.error(err.message));
+    message.success("User Registered Successfully!");
   };
 
   return (
     <>
-      <div className="mb-4 text-2xl font-bold xl:text-3xl">
-        {"sys.login.signUpFormTitle"}
+      <div className="flex flex-col justify-center items-center  ">
+        <Typography.Title level={1}>Register</Typography.Title>
+        <Form
+          form={form}
+          className="flex flex-col justify-center items-center gap-4 w-full"
+          onFinish={onFinish}
+        >
+          <Flex vertical gap={"small"} justify="center" className="w-full">
+            <Form.Item
+              name="email"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your email!",
+                },
+              ]}
+            >
+              <Input size="large" placeholder="Email" />
+            </Form.Item>
+            <Form.Item
+              name="userName"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your userName!",
+                },
+              ]}
+            >
+              <Input size="large" placeholder="User Name" />
+            </Form.Item>
+            <Form.Item
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your password!",
+                },
+              ]}
+            >
+              <Input.Password size="large" placeholder="Password" />
+            </Form.Item>
+            <Form.Item
+              name="role"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your role!",
+                },
+              ]}
+            >
+              <Input placeholder="Role" size="large" />
+            </Form.Item>
+          </Flex>
+          <Flex gap={"small"} className="w-full">
+            <Button
+              size="large"
+              type="primary"
+              htmlType="submit"
+              className="w-full"
+            >
+              Register
+            </Button>
+            <Button
+              size="large"
+              type="default"
+              onClick={() => router.push("/auth/login")}
+              className="w-full"
+            >
+              Login
+            </Button>
+          </Flex>
+        </Form>
       </div>
-      <Form
-        name="normal_login"
-        size="large"
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-      >
-        <Form.Item
-          name="name"
-          rules={[{ required: true, message: "sys.login.accountPlaceholder" }]}
-        >
-          <Input placeholder={"sys.login.userName"} />
-        </Form.Item>
-        <Form.Item
-          name="email"
-          rules={[{ required: true, message: "sys.login.emaildPlaceholder" }]}
-        >
-          <Input placeholder={"sys.login.email"} />
-        </Form.Item>
-        <Form.Item
-          name="password"
-          rules={[{ required: true, message: "sys.login.passwordPlaceholder" }]}
-        >
-          <Input.Password type="password" placeholder={"sys.login.password"} />
-        </Form.Item>
-        <Form.Item
-          name="confirmPassword"
-          rules={[
-            {
-              required: true,
-              message: "sys.login.confirmPasswordPlaceholder",
-            },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue("password") === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(new Error("sys.login.diffPwd"));
-              },
-            }),
-          ]}
-        >
-          <Input.Password
-            type="password"
-            placeholder={"sys.login.confirmPassword"}
-          />
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit" className="w-full">
-            {"sys.login.registerButton"}
-          </Button>
-        </Form.Item>
-
-        <div className="mb-2 text-xs text-gray">
-          <span>{"sys.login.registerAndAgree"}</span>
-          <a href="./" className="text-sm !underline">
-            {"sys.login.termsOfService"}
-          </a>
-          {" & "}
-          <a href="./" className="text-sm !underline">
-            {"sys.login.privacyPolicy"}
-          </a>
-        </div>
-
-        <ReturnButton onClick={backToLogin} />
-      </Form>
     </>
   );
 }
-
-export default RegisterForm;

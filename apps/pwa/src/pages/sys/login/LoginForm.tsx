@@ -1,4 +1,4 @@
-import { Button, Form, Input, message } from "antd";
+import { Button, Flex, Form, Input, message, Typography } from "antd";
 import {
   LoginStateEnum,
   useLoginStateContext,
@@ -8,9 +8,7 @@ import { useRouter } from "@/router/hooks";
 
 interface LoginFormType {
   email: string;
-  userName: string;
   password: string;
-  role: string;
 }
 
 // biome-ignore lint/style/noDefaultExport: <explanation>
@@ -26,7 +24,6 @@ export default function LoginForm() {
     return null;
   }
   const onFinish = async (values: LoginFormType) => {
-    console.info(values);
     await fetch(import.meta.env.VITE_BE_URL + "/auth/login", {
       method: "POST",
       headers: {
@@ -37,72 +34,69 @@ export default function LoginForm() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.info(data);
-        router.replace("/auth/success");
+        if (data.statusCode === 200) {
+          message.success("Successfully Login");
+          router.replace("/auth/success");
+        } else {
+          message.error(data.message);
+        }
       })
-      .catch((err) => message.error(err.message));
-    message.success("Successfully Login");
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   return (
     <>
-      <div className="flex justify-center items-center  ">
+      <div className="flex flex-col justify-center items-center  ">
+        <Typography.Title level={1}>Login</Typography.Title>
         <Form
           form={form}
           className="flex flex-col justify-center items-center gap-4 w-full"
           onFinish={onFinish}
         >
-          <Form.Item
-            name="email"
-            label="Email"
-            rules={[
-              {
-                required: true,
-                message: "Please input your email!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="userName"
-            label="UserName"
-            rules={[
-              {
-                required: true,
-                message: "Please input your userName!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="password"
-            label="Password"
-            rules={[
-              {
-                required: true,
-                message: "Please input your password!",
-              },
-            ]}
-          >
-            <Input.Password />
-          </Form.Item>
-          <Form.Item
-            name="role"
-            label="Role"
-            rules={[
-              {
-                required: true,
-                message: "Please input your role!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Button type="primary" htmlType="submit">
-            Login
-          </Button>
+          <Flex vertical gap={"small"} justify="center" className="w-full">
+            <Form.Item
+              name="email"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your email!",
+                },
+              ]}
+            >
+              <Input placeholder="Email" size="large" />
+            </Form.Item>
+            <Form.Item
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your password!",
+                },
+              ]}
+            >
+              <Input.Password placeholder="Password" size="large" />
+            </Form.Item>
+          </Flex>
+          <Flex gap={"small"} className="w-full">
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="w-full"
+              size="large"
+            >
+              Login
+            </Button>
+            <Button
+              size="large"
+              type="default"
+              onClick={() => router.push("/auth/register")}
+              className="w-full"
+            >
+              Signup
+            </Button>
+          </Flex>
         </Form>
       </div>
     </>
