@@ -5,6 +5,7 @@ import { useNavigate, useMatches, useLocation } from "react-router-dom";
 import { NAV_HORIZONTAL_HEIGHT } from "./config";
 import { useThemeToken } from "../../theme/hooks";
 
+// biome-ignore lint/style/noDefaultExport: <explanation>
 export default function NavHorizontal() {
   const navigate = useNavigate();
   const matches = useMatches();
@@ -12,9 +13,6 @@ export default function NavHorizontal() {
 
   const { colorBgElevated } = useThemeToken();
 
-  /**
-   * state
-   */
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([""]);
 
@@ -22,14 +20,10 @@ export default function NavHorizontal() {
     setSelectedKeys([pathname]);
   }, [pathname, matches]);
 
-  /**
-   * events
-   */
   const onOpenChange: MenuProps["onOpenChange"] = (keys) => {
     setOpenKeys(keys);
   };
   const onClick: MenuProps["onClick"] = ({ key }) => {
-    // 从扁平化的路由信息里面匹配当前点击的那个
     navigate(key);
   };
 

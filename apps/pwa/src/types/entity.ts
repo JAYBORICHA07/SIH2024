@@ -4,9 +4,12 @@ export interface UserToken {
 }
 
 export interface UserInfo {
-  id: string;
-  email: string;
-  name: string;
-  profilePicture?: string;
-  isVerified: boolean;
+  iat: number;
+  user: {
+    id: string;
+    email: string;
+    name: string;
+    profilePicture?: string;
+    isVerified: boolean;
+  };
 }

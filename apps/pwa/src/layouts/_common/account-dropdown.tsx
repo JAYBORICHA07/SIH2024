@@ -6,28 +6,27 @@ import { NavLink } from "react-router-dom";
 import { useThemeToken } from "../../theme/hooks";
 import { useUserActions, useUserInfo } from "../../store/userStore";
 import { IconButton } from "../../components/icon";
-import { useLoginStateContext } from "../../pages/sys/login/providers/LoginStateProvider";
 import { trpc } from "@/trpc/trpc";
+import { useRouter } from "@/router/hooks";
+import { UserOutlined } from "@ant-design/icons";
 
 const { VITE_APP_HOMEPAGE: HOMEPAGE } = import.meta.env;
 
-/**
- * Account Dropdown
- */
+// biome-ignore lint/style/noDefaultExport: <explanation>
 export default function AccountDropdown() {
-  const { name, email, profilePicture } = useUserInfo();
+  const { user } = useUserInfo();
   const { clearUserInfoAndToken } = useUserActions();
-  const { backToLogin } = useLoginStateContext();
-	const utils = trpc.useUtils();
+  const utils = trpc.useUtils();
+  const router = useRouter();
 
   const logout = trpc.auth.logout.useMutation({
-		onSuccess() {
-			utils.auth.profile.reset()
+    onSuccess() {
+      utils.auth.profile.reset();
       clearUserInfoAndToken();
-      backToLogin();
-		},
-	})
-  
+      router.replace("/auth/login");
+    },
+  });
+
   const { colorBgElevated, borderRadiusLG, boxShadowSecondary } =
     useThemeToken();
 
@@ -44,8 +43,8 @@ export default function AccountDropdown() {
   const dropdownRender: DropdownProps["dropdownRender"] = (menu) => (
     <div style={contentStyle}>
       <div className="flex flex-col items-start p-4">
-        <div>{name}</div>
-        <div className="text-gray">{email}</div>
+        <div>{user?.name}</div>
+        <div className="text-gray">{user?.email}</div>
       </div>
       <Divider style={{ margin: 0 }} />
       {React.cloneElement(menu as React.ReactElement, { style: menuStyle })}
@@ -70,7 +69,7 @@ export default function AccountDropdown() {
       label: <button className="font-bold text-warning">{"Logout"}</button>,
       key: "3",
       onClick: () => {
-        logout.mutate()
+        logout.mutate();
       },
     },
   ];
@@ -82,12 +81,16 @@ export default function AccountDropdown() {
       dropdownRender={dropdownRender}
     >
       <IconButton className="h-10 w-10 transform-none px-0 hover:scale-105">
-        <img
-          className="h-8 w-8 rounded-full"
-          src={profilePicture}
-          alt=""
-          referrerPolicy="no-referrer"
-        />
+        {user?.profilePicture ? (
+          <img
+            className="h-8 w-8 rounded-full"
+            src={user.profilePicture}
+            alt=""
+            referrerPolicy="no-referrer"
+          />
+        ) : (
+          <UserOutlined />
+        )}
       </IconButton>
     </Dropdown>
   );

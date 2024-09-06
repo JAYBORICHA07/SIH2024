@@ -6,7 +6,8 @@ export const trpcRouter = router({
   auth: authApi,
   currentUser: protectedProcedure.query(async ({ ctx }) => {
     const user = ctx.user;
-    return user;
+    console.log({ user });
+    return user?.user;
   }),
 });
 

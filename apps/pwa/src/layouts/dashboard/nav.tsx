@@ -22,6 +22,7 @@ type Props = {
   closeSideBarDrawer?: () => void;
 };
 
+// biome-ignore lint/style/noDefaultExport: <explanation>
 export default function Nav(props: Props) {
   const navigate = useNavigate();
   const matches = useMatches();
@@ -81,10 +82,10 @@ export default function Nav(props: Props) {
   };
 
   const toggleCollapsed = () => {
-    if (!collapsed) {
-      setThemeLayout(ThemeLayout.Mini);
-    } else {
+    if (collapsed) {
       setThemeLayout(ThemeLayout.Vertical);
+    } else {
+      setThemeLayout(ThemeLayout.Mini);
     }
     setCollapsed(!collapsed);
   };

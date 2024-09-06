@@ -2,7 +2,6 @@ import React from "react";
 import { Button, Form, Input, message, Typography } from "antd";
 import { useUserInfo } from "@/store/userStore";
 import { useForm } from "antd/es/form/Form";
-import { trpcFetch } from "@/trpc/trpcFetch";
 
 export const Home: React.FC = () => {
   const UserInfo = useUserInfo();
@@ -11,8 +10,6 @@ export const Home: React.FC = () => {
 
   const onFinish = async (values: { email: string; userName: string }) => {
     console.info(values);
-    const data = await trpcFetch.user.query({ ...values });
-    console.info(data);
     message.success("Successfully Submitted");
   };
 

@@ -55,7 +55,7 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
       {
         caseSensitive: false,
         index: true,
-        path: "/dashboard",
+        path: "/adminPanel",
         lazy: async () => {
           const { Workbench } = await import("../pages/dashboard/workbench");
           return { element: <PageWrapper component={<Workbench />} /> };

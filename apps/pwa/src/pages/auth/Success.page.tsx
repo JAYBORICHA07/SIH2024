@@ -25,7 +25,7 @@ export const AuthSuccess: React.FC = () => {
       setUserToken({ exp: userSession.data.exp, iat: userSession.data.iat });
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      setUserInfo(userSession.data.user);
+      setUserInfo(userSession.data);
       router.replace("/");
     }
   }, [router, userSession.isLoading]);

@@ -1,16 +1,18 @@
 import { version } from "../package.json";
 
 // / App Configuration
-export const APP_NAME = "Your App Name";
-export const APP_DESCRIPTION = "Your app description goes here.";
+export const APP_NAME = "GradNexus";
+export const APP_DESCRIPTION =
+  "Ultimate networking site for Aluminy to connect with their community.";
 
 // Image Paths
 export const APP_LOGO = "/favicon/apple-touch-icon.png";
 export const APP_FAVICON = "/favicon.ico";
 
 // Meta Tags
-export const META_TITLE = "Your App Title";
-export const META_DESCRIPTION = "Your app content description.";
+export const META_TITLE = "GradNexus";
+export const META_DESCRIPTION =
+  "Ultimate networking site for Aluminy to connect with their community.";
 
 // Social Media
 export const SOCIAL_TWITTER = "https://twitter.com/youraccount";
@@ -21,11 +23,11 @@ export const COMPANY_URL = "https://yourcompany.com";
 export const SUPPORT_EMAIL = "support@yourcompany.com";
 
 // API Endpoints
-export const API_BASE_URL = import.meta.env.VITE_BE_URL || "http://localhost:4000";
+export const API_BASE_URL =
+  import.meta.env.VITE_BE_URL || "http://localhost:4000";
 
 // microsoft clarity
 export const CLARITY_ID = import.meta.env.VITE_CLARITY_ID || "Your-Clarity-ID";
-
 
 const currentURL = window.location.href;
 export const isRemote = currentURL.slice(0, 8) === "https://";
@@ -56,4 +58,3 @@ export const collapseDrawer = {
   DRAWER_ITEM_SUB_HEIGHT: 40,
   DRAWER_ITEM_HORIZONTAL_HEIGHT: 40,
 };
-
