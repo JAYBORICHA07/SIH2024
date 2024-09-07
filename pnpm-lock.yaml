@@ -210,6 +210,9 @@ importers:
       common-components:
         specifier: workspace:*
         version: link:../../packages/tezi-antd-components
+      dayjs:
+        specifier: ^1.11.13
+        version: 1.11.13
       framer-motion:
         specifier: ^11.2.12
         version: 11.3.30(@emotion/is-prop-valid@1.3.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)

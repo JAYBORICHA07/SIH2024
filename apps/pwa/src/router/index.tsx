@@ -116,6 +116,65 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
     ],
   },
   {
+    path: "/event",
+    element: <PageWrapper component={<DashboardLayout />} />,
+    errorElement: <ErrorPage />,
+    showInNav: true,
+    children: [
+      {
+        caseSensitive: false,
+        index: true,
+        path: "/event/create",
+        lazy: async () => {
+          const { EventCreation } = await import(
+            "../pages/event/EventCreate.Page"
+          );
+          return { element: <PageWrapper component={<EventCreation />} /> };
+        },
+        icon: "ph:chart-pie-slice-duotone",
+        navPath: "/event/create",
+        navLabel: "Create Event",
+        title: "Create Event",
+        subheader: "Create Event",
+        showInNav: true,
+      },
+      {
+        caseSensitive: false,
+        index: true,
+        path: "/event/public",
+        lazy: async () => {
+          const { EventDetails } = await import(
+            "../pages/event/EventPublic.Link"
+          );
+          return { element: <PageWrapper component={<EventDetails />} /> };
+        },
+        icon: "ph:chart-pie-slice-duotone",
+        navPath: "/event/public",
+        navLabel: "Public Event",
+        title: "Public Event",
+        subheader: "Public Event",
+        showInNav: true,
+      },
+      {
+        caseSensitive: false,
+        index: true,
+        path: "/event/register",
+        lazy: async () => {
+          const { EventRegistration } = await import(
+            "../pages/event/EventRegister.Page"
+          );
+          return { element: <PageWrapper component={<EventRegistration />} /> };
+        },
+        icon: "ph:chart-pie-slice-duotone",
+        navPath: "/event/register",
+        navLabel: "Register Event",
+        title: "Event Registration",
+        subheader: "Event Registration",
+        showInNav: true,
+      },
+    ],
+  },
+  {
     path: "/auth",
     errorElement: <ErrorPage />,
     children: [
