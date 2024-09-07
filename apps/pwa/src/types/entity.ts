@@ -6,10 +6,16 @@ export interface UserToken {
 export interface UserInfo {
   iat: number;
   user: {
-    id: string;
+    collegeId?: string;
+    currCompany?: string;
+    currRole?: string;
+    department?: string;
     email: string;
+    isVerified: false;
+    mobileNumber?: string;
     name: string;
+    passoutYear?: string;
     profilePicture?: string;
-    isVerified: boolean;
+    role?: string;
   };
 }

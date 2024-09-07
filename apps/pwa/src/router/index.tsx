@@ -93,6 +93,29 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
     ],
   },
   {
+    path: "/user",
+    element: <PageWrapper component={<DashboardLayout />} />,
+    errorElement: <ErrorPage />,
+    showInNav: true,
+    children: [
+      {
+        caseSensitive: false,
+        index: true,
+        path: "/user/profile",
+        lazy: async () => {
+          const { UserPage } = await import("../pages/user/User.Profile");
+          return { element: <PageWrapper component={<UserPage />} /> };
+        },
+        icon: "ph:chart-pie-slice-duotone",
+        navPath: "/user/profile",
+        navLabel: "User profile",
+        title: "User profile",
+        subheader: "User profile",
+        showInNav: false,
+      },
+    ],
+  },
+  {
     path: "/auth",
     errorElement: <ErrorPage />,
     children: [

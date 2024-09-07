@@ -18,14 +18,12 @@ export const Auth: FastifyPluginAsync = fastifyPlugin(async (fastify) => {
       const { email, userName, password, role } =
         request.body as RegisterFormType;
 
-      const user = await db.user
-        .create({
-          email: email,
-          name: userName,
-          password: password,
-          role: role,
-        })
-        .select("id", "name", "email", "role");
+      const user = await db.user.create({
+        email: email,
+        name: userName,
+        password: password,
+        role: role,
+      });
 
       console.info(user);
 
@@ -54,10 +52,7 @@ export const Auth: FastifyPluginAsync = fastifyPlugin(async (fastify) => {
         "role" | "userName"
       >;
 
-      const user = await db.user
-        .where({ email })
-        .where({ password })
-        .select("id", "name", "email", "role");
+      const user = await db.user.where({ email }).where({ password });
 
       if (user[0]?.id) {
         const jwtToken = fastify.jwt.sign({ user: user[0] });
