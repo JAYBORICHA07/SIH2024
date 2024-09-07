@@ -53,18 +53,9 @@ export default function AccountDropdown() {
 
   const items: MenuProps["items"] = [
     {
-      label: <NavLink to={HOMEPAGE}>{"Dashboard"}</NavLink>,
-      key: "0",
-    },
-    {
-      label: <NavLink to="/management/user/profile">{"Profile"}</NavLink>,
+      label: <NavLink to="/user/profile">{"Profile"}</NavLink>,
       key: "1",
     },
-    {
-      label: <NavLink to="/management/user/account">{"Account"}</NavLink>,
-      key: "2",
-    },
-    { type: "divider" },
     {
       label: <button className="font-bold text-warning">{"Logout"}</button>,
       key: "3",

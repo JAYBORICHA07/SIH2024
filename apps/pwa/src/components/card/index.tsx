@@ -8,6 +8,7 @@ type Props = {
   className?: string;
   style?: CSSProperties;
 };
+// biome-ignore lint/style/noDefaultExport: <explanation>
 export default function Card({ children, ...other }: Props) {
   const { colorBgContainer } = useThemeToken();
   const { themeMode } = useSettings();
@@ -29,6 +30,7 @@ export default function Card({ children, ...other }: Props) {
         overflow: "hidden",
         position: "relative",
         display: "flex",
+        flexDirection: "column",
         alignItems: "center",
       }}
       {...other}
