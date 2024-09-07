@@ -71,14 +71,11 @@ export const EventCreation: React.FC = () => {
 
   return (
     <div style={{ maxWidth: 800, margin: "0 auto", padding: 24 }}>
-      <Card>
+      <Card className="shadow-lg">
         <Typography.Title level={2}>Create New Event</Typography.Title>
         <Form form={form} layout="vertical" onFinish={onFinish}>
           <Flex vertical gap={"small"} className="px-4 py-4">
             <Flex vertical gap={4} wrap="wrap">
-              {/* <Typography.Title level={4} style={{ margin: 0 }}>
-                Event Title
-              </Typography.Title> */}
               <Form.Item
                 name="title"
                 rules={[
@@ -90,9 +87,6 @@ export const EventCreation: React.FC = () => {
             </Flex>
 
             <Flex vertical gap={4} wrap="wrap">
-              {/* <Typography.Title level={4} style={{ margin: 0 }}>
-                Event Date
-              </Typography.Title> */}
               <Form.Item
                 name="date"
                 rules={[
@@ -108,9 +102,6 @@ export const EventCreation: React.FC = () => {
               </Form.Item>
             </Flex>
             <Flex vertical gap={4} wrap="wrap">
-              {/* <Typography.Title level={4} style={{ margin: 0 }}>
-                Event Type
-              </Typography.Title> */}
               <Form.Item
                 name="type"
                 rules={[
@@ -129,9 +120,6 @@ export const EventCreation: React.FC = () => {
             </Flex>
 
             <Flex gap={4} wrap="wrap" vertical>
-              {/* <Typography.Title level={4} style={{ margin: 0 }}>
-                Event Time
-              </Typography.Title> */}
               <Flex gap={4} wrap="wrap">
                 <Form.Item
                   name="startTime"
@@ -163,9 +151,6 @@ export const EventCreation: React.FC = () => {
             </Flex>
 
             <Flex vertical gap={4} wrap="wrap">
-              {/* <Typography.Title level={4} style={{ margin: 0 }}>
-                Event Location
-              </Typography.Title> */}
               <Form.Item
                 name="location"
                 rules={[
@@ -184,9 +169,6 @@ export const EventCreation: React.FC = () => {
             </Flex>
 
             <Flex vertical gap={4} wrap="wrap">
-              {/* <Typography.Title level={4} style={{ margin: 0 }}>
-                Event Capacity
-              </Typography.Title> */}
               <Form.Item
                 name="capacity"
                 rules={[
@@ -206,9 +188,6 @@ export const EventCreation: React.FC = () => {
             </Flex>
 
             <Flex vertical gap={4} wrap="wrap">
-              {/* <Typography.Title level={4} style={{ margin: 0 }}>
-                Event Description
-              </Typography.Title> */}
               <Form.Item name="description" rules={[{ required: true }]}>
                 <TextArea
                   size="large"

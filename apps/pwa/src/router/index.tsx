@@ -116,6 +116,31 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
     ],
   },
   {
+    path: "/networking",
+    element: <PageWrapper component={<DashboardLayout />} />,
+    errorElement: <ErrorPage />,
+    showInNav: true,
+    children: [
+      {
+        caseSensitive: false,
+        index: true,
+        path: "/networking/home",
+        lazy: async () => {
+          const { NetworkingHome } = await import(
+            "../pages/Netwotking/NetworkingHome.Page"
+          );
+          return { element: <PageWrapper component={<NetworkingHome />} /> };
+        },
+        icon: "ph:chart-pie-slice-duotone",
+        navPath: "/networking/home",
+        navLabel: "Networking Home",
+        title: "Networking Home",
+        subheader: "/networking/home",
+        showInNav: true,
+      },
+    ],
+  },
+  {
     path: "/event",
     element: <PageWrapper component={<DashboardLayout />} />,
     errorElement: <ErrorPage />,
@@ -170,6 +195,21 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
         navLabel: "Register Event",
         title: "Event Registration",
         subheader: "Event Registration",
+        showInNav: true,
+      },
+      {
+        caseSensitive: false,
+        index: true,
+        path: "/event/list",
+        lazy: async () => {
+          const { EventsList } = await import("../pages/event/EventList");
+          return { element: <PageWrapper component={<EventsList />} /> };
+        },
+        icon: "ph:chart-pie-slice-duotone",
+        navPath: "/event/list",
+        navLabel: "Event List",
+        title: "Event List",
+        subheader: "Event List",
         showInNav: true,
       },
     ],
