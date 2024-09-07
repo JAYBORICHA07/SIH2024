@@ -1,6 +1,14 @@
 import { orchidORM } from "orchid-orm";
 import { env, isTest } from "../configs/env.config";
 import { UserTable } from "./tables/user.table";
+import { ProjectsTable } from "./tables/project.table";
+import { AlumniProfileTable } from "./tables/alumniProfile.table";
+import { DonationsTable } from "./tables/donations.table";
+import { EventsTable } from "./tables/events.table";
+import { JobPostingsTable } from "./tables/jobPosting.table";
+import { PaymentTransactionsTable } from "./tables/paymentTransactions.table";
+import { SuccessStoriesTable } from "./tables/successStories.table";
+import { JobApplicationTable } from "./tables/jobApplication.table";
 
 export const db = orchidORM(
   {
@@ -11,5 +19,13 @@ export const db = orchidORM(
   },
   {
     user: UserTable,
+    projects: ProjectsTable,
+    alumni_profile: AlumniProfileTable,
+    donations: DonationsTable,
+    events: EventsTable,
+    job_postings: JobPostingsTable,
+    payment_transaction: PaymentTransactionsTable,
+    success_stories: SuccessStoriesTable,
+    job_application: JobApplicationTable,
   }
 );
