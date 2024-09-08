@@ -11,10 +11,6 @@ export const NetworkingHubForAlumniInput = z.object({
     alumniId: z.string().trim(),
 })
 
-export const NetworkingHubUpdateInput = z.object({
-
-})
-
 export const networkingHubController = router({
     // getNetworkingHubs: protectedProcedure
     //     .query(async ({ input, ctx }) => {
