@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Typography,
   Input,
@@ -13,12 +13,50 @@ import {
 } from "antd";
 import { SearchOutlined, UserOutlined } from "@ant-design/icons";
 import { useMediaQuery } from "react-responsive";
+import { trpcFetch } from "@/trpc/trpcFetch";
 const { Title, Text } = Typography;
 const { TabPane } = Tabs;
 const { Meta } = Card;
 
+export type User = {
+  id: string;
+  name: string;
+  collegeId: string | null;
+  currCompany: string | null;
+  currRole: string | null;
+  department: string | null;
+  email: string | null;
+  isVerified: boolean;
+  mobileNumber: string | null;
+  graduationYear: number | null;
+  profilePicture: string | null;
+  role: string | null;
+};
+
+type Job = {
+  jobId: string; // UUID
+  postedBy: string; // ForeignKey to UserTable (UUID)
+  jobTitle: string;
+  companyName: string;
+  location: string;
+  description: string;
+  salaryRange: string;
+  jobType: string;
+};
+
 export const NetworkingHome: React.FC = () => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
+  const [users, setUsers] = useState<User[]>([]);
+  const [jobs, setJobs] = useState<Job[]>([]);
+
+  useEffect(() => {
+    trpcFetch.getAllProfiles.query().then((data) => {
+      setUsers(data);
+    });
+    trpcFetch.getAllJobs.query().then((data) => {
+      setJobs(data);
+    });
+  }, []);
 
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto", padding: 24 }}>
@@ -57,8 +95,8 @@ export const NetworkingHome: React.FC = () => {
       <Tabs defaultActiveKey="connections">
         <TabPane tab="Connections" key="connections">
           <Row gutter={[16, 16]}>
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <Col xs={24} sm={12} lg={8} key={i}>
+            {users?.map((user) => (
+              <Col xs={24} sm={12} lg={8} key={user.id}>
                 <Card
                   style={{
                     padding: 0,
@@ -74,15 +112,17 @@ export const NetworkingHome: React.FC = () => {
                   ]}
                 >
                   <Meta
-                    avatar={
-                      <Avatar src={`/placeholder.svg?height=40&width=40`} />
-                    }
-                    title={`Alumni Name ${i}`}
+                    avatar={<Avatar src={user?.profilePicture ?? ""} />}
+                    title={`${user.name}`}
                     description={
                       <>
-                        <Text type="secondary">Class of 201{i}</Text>
+                        <Text type="secondary">
+                          Class of {user?.graduationYear}
+                        </Text>
                         <br />
-                        <Text>Software Engineer at Tech Company {i}</Text>
+                        <Text>
+                          {user.currRole} at {user.currCompany}
+                        </Text>
                       </>
                     }
                   />
@@ -94,18 +134,25 @@ export const NetworkingHome: React.FC = () => {
 
         <TabPane tab="Job Postings" key="jobs">
           <Space direction="vertical" size="middle" style={{ display: "flex" }}>
-            {[1, 2, 3].map((i) => (
-              <Card key={i}>
-                <Meta
-                  title={`Senior Developer at Tech Corp ${i}`}
-                  description="San Francisco, CA (Remote Optional)"
-                />
-                <Text style={{ margin: "16px 0", display: "block" }}>
-                  We're looking for an experienced developer to join our team...
-                </Text>
-                <Button type="primary">Apply Now</Button>
-              </Card>
-            ))}
+            <Row gutter={[16, 16]}>
+              {jobs.map((jobs) => (
+                <Col xs={24} sm={12} lg={8} key={jobs.jobId}>
+                  <Card key={jobs.jobId}>
+                    <Meta title={jobs.jobTitle} description={jobs.location} />
+                    <Text
+                      style={{
+                        margin: "16px 0",
+                        display: "block",
+                        textAlign: "justify",
+                      }}
+                    >
+                      {jobs.description}
+                    </Text>
+                    <Button type="primary">Apply Now</Button>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
           </Space>
         </TabPane>
 

@@ -1,5 +1,5 @@
-import React from "react";
-import { Card, Typography, Button, Space, Avatar, Tooltip } from "antd";
+import React, { useEffect, useState } from "react";
+import { Typography, Button, Space, Avatar, Tooltip } from "antd";
 import {
   CalendarOutlined,
   ClockCircleOutlined,
@@ -7,39 +7,59 @@ import {
   ShareAltOutlined,
   UsergroupAddOutlined,
 } from "@ant-design/icons";
+import { trpcFetch } from "@/trpc/trpcFetch";
+import { useParams } from "react-router-dom";
+import Card from "@/components/card";
+import { useRouter } from "@/router/hooks";
 
 const { Title, Text, Paragraph } = Typography;
 
-// In a real application, you would fetch this data based on the event ID from the URL
-const eventData = {
-  id: "evt123456",
-  title: "Annual Alumni Gala",
-  date: "September 15, 2023",
-  time: "7:00 PM - 11:00 PM",
-  location: "Grand Ballroom, University Center",
-  type: "Social Gathering",
-  description:
-    "Join us for an evening of celebration, networking, and reminiscing about our alma mater. This year's gala will feature distinguished alumni speakers, a silent auction to support student scholarships, and live entertainment. Don't miss this opportunity to reconnect with old friends and make new connections within our vibrant alumni community.",
-  capacity: 250,
-  attendees: [
-    { name: "John Doe", avatar: "/placeholder.svg?height=32&width=32" },
-    { name: "Jane Smith", avatar: "/placeholder.svg?height=32&width=32" },
-    { name: "Bob Johnson", avatar: "/placeholder.svg?height=32&width=32" },
-  ],
+type Event = {
+  eventId: string;
+  eventTitle: string;
+  eventDate: string;
+  eventType: string;
+  eventTime: string;
+  capacity: string;
+  description: string;
+  location: string;
+  organizerId?: string | null;
+  attendeesId: string[];
 };
 
+const attendees = [
+  { name: "John Doe", avatar: "/placeholder.svg?height=32&width=32" },
+  { name: "Jane Smith", avatar: "/placeholder.svg?height=32&width=32" },
+  { name: "Bob Johnson", avatar: "/placeholder.svg?height=32&width=32" },
+];
+
 export const EventDetails: React.FC = () => {
+  const { id } = useParams();
+  const [eventData, setEventData] = useState<Event | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    trpcFetch.getEventById.query(id ?? "").then((data) => {
+      console.info(data);
+      setEventData(data);
+    });
+  }, []);
+
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: eventData.title,
-        text: `Check out this event: ${eventData.title}`,
+        title: eventData?.eventTitle,
+        text: `Check out this event: ${eventData?.eventTitle}`,
         url: window.location.href,
       });
     } else {
       // Fallback for browsers that don't support Web Share API
       alert(`Share this link: ${window.location.href}`);
     }
+  };
+
+  const handleRegister = () => {
+    router.push(`/event/register/${id}`);
   };
 
   return (
@@ -54,8 +74,8 @@ export const EventDetails: React.FC = () => {
             }}
           >
             <div>
-              <Title level={2}>{eventData.title}</Title>
-              <Text type="secondary">{eventData.type}</Text>
+              <Title level={2}>{eventData?.eventTitle}</Title>
+              <Text type="secondary">{eventData?.eventType}</Text>
             </div>
             <Button icon={<ShareAltOutlined />} onClick={handleShare} />
           </div>
@@ -63,31 +83,31 @@ export const EventDetails: React.FC = () => {
           <Space direction="vertical">
             <Space>
               <CalendarOutlined />
-              <Text>{eventData.date}</Text>
+              <Text>{eventData?.eventDate}</Text>
             </Space>
             <Space>
               <ClockCircleOutlined />
-              <Text>{eventData.time}</Text>
+              <Text>{eventData?.eventTime}</Text>
             </Space>
             <Space>
               <EnvironmentOutlined />
-              <Text>{eventData.location}</Text>
+              <Text>{eventData?.location}</Text>
             </Space>
             <Space>
               <UsergroupAddOutlined />
-              <Text>Capacity: {eventData.capacity}</Text>
+              <Text>Capacity: {eventData?.capacity}</Text>
             </Space>
           </Space>
 
           <div>
             <Title level={4}>Event Description</Title>
-            <Paragraph>{eventData.description}</Paragraph>
+            <Paragraph>{eventData?.description}</Paragraph>
           </div>
 
           <div>
             <Title level={4}>Attendees</Title>
             <Avatar.Group maxCount={4}>
-              {eventData.attendees.map((attendee, index) => (
+              {attendees.map((attendee, index) => (
                 <Tooltip key={index} title={attendee.name}>
                   <Avatar src={attendee.avatar} alt={attendee.name}>
                     {attendee.name
@@ -98,12 +118,12 @@ export const EventDetails: React.FC = () => {
                 </Tooltip>
               ))}
               <Avatar style={{ backgroundColor: "#f56a00" }}>
-                +{eventData.capacity - eventData.attendees.length}
+                +{eventData?.capacity ?? -attendees.length}
               </Avatar>
             </Avatar.Group>
           </div>
 
-          <Button type="primary" block>
+          <Button type="primary" block onClick={handleRegister}>
             Register for Event
           </Button>
         </Space>
