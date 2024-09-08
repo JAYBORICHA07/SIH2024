@@ -8,8 +8,8 @@ export class AttendeesTable extends BaseTable {
   columns = this.setColumns((t) => ({
     id: t
       .uuid()
-      .foreignKey(() => EventsTable, "attendeesId")
-      .primaryKey(),
+      .primaryKey()
+      .default(t.sql`gen_random_uuid()`),
     eventId: t.uuid().foreignKey(() => EventsTable, "eventId"),
     name: t.string().trim(),
     email: t.string().trim().email(),

@@ -20,7 +20,6 @@ export class EventsTable extends BaseTable {
       .uuid()
       .foreignKey(() => UserTable, "id")
       .nullable(),
-    attendeesId: t.array(t.uuid().unique()),
   }));
 }
 
