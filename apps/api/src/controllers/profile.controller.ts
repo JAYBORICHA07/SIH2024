@@ -49,9 +49,4 @@ export const profileController = router({
             return profile[0];
         }),
     
-    demo: protectedProcedure
-        .query(async ({ input, ctx }) => {
-            const event = await db.events.all();
-            return event;
-        })
 })

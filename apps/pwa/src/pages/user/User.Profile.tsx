@@ -54,8 +54,6 @@ export function UserPage() {
   const [form] = useForm<UserProfileType>();
 
   useEffect(() => {
-    const d = trpcFetch.demo.query();
-    console.log(d)
     trpcFetch.getProfile.query()
     .then((data) => {
       if(data)
