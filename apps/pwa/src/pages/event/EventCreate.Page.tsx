@@ -14,6 +14,7 @@ import {
 import { EnvironmentOutlined } from "@ant-design/icons";
 import { Dayjs } from "dayjs";
 import { trpcFetch } from "@/trpc/trpcFetch";
+import { useRouter } from "@/router/hooks";
 
 type EventData = {
   title: string;
@@ -26,26 +27,16 @@ type EventData = {
   capacity: string;
 };
 
-type CreatedEvent = {
-  title: string;
-  type: string;
-  date: string;
-  time: string;
-  location: string;
-  capacity: string;
-  description: string;
-};
-
 const { Option } = Select;
 const { TextArea } = Input;
 
 export const EventCreation: React.FC = () => {
   const [form] = Form.useForm<EventData>();
+  const router = useRouter();
 
   const onFinish = async (values: EventData) => {
-    message.loading("Creating event...");
     try {
-      const newEvent: CreatedEvent = {
+      const event = await trpcFetch.addEvent.mutate({
         title: values.title,
         description: values.description,
         date: values.date?.format("MMMM D, YYYY") || "",
@@ -53,17 +44,13 @@ export const EventCreation: React.FC = () => {
         location: values.location,
         type: values.type,
         capacity: values.capacity,
-      };
-      message.success(JSON.stringify(newEvent));
-
-      const event = await trpcFetch.addEventv.mutate(newEvent);
+      });
       console.info(event);
       message.success("Event created successfully");
-      // form.resetFields();
+      router.push("/event/list");
     } catch (error) {
       console.error(error);
       message.error("Failed to create event");
-      message.error(error);
     }
   };
 

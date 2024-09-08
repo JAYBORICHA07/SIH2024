@@ -11,7 +11,7 @@ export const trpcRouter = router({
     return user?.user;
   }),
   addImage: CloudinaryImageController.uploadImage,
-  addEventv: eventController.createEvent,
+  addEvent: eventController.createEvent,
 });
 
 export type ApiRouter = typeof trpcRouter;
