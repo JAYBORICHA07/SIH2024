@@ -49,7 +49,7 @@ export const jobPostingController = router({
         .input(JobPostingInput)
         .query(async ({ input, ctx }) => {
             const jobPosting = await db.job_postings
-                .insert({
+                .create({
                     postedBy: ctx.user?.user.id!,
                     jobTitle: input.jobTitle,
                     companyName: input.companyName,

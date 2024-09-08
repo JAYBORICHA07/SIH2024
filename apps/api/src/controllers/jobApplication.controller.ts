@@ -44,7 +44,7 @@ export const jobApplicationController = router({
         .input(JobApplicationByJobInput)
         .query(async ({ input, ctx }) => {
             const jobApplication = await db.job_application
-                .insert({
+                .create({
                     alumniId: ctx.user?.user.id!,
                     jobId: input.jobId,
                     status: 'Submitted',

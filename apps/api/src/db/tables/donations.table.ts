@@ -15,7 +15,8 @@ export class DonationsTable extends BaseTable {
         donationType: t.enum('donation_type', ['One-time', 'Recurring']),
         frequency: t.enum('frequency', ['Monthly', 'Quarterly', 'Yearly']),
         donationDate: t.timestamp(),
-        receiptUrl: t.string().nullable()    
+        createAt: t.timestamp().default(t.sql`now()`),
+        updatedAt: t.timestamp().default(t.sql`now()`),
     }))
 }
 

@@ -12,9 +12,9 @@ export class ProjectsTable extends BaseTable {
     amountRaised: t.decimal().default(0),
     startDate: t.date(),
     endDate: t.date(),
-    projectDype: t.enum('project_type', ['Scholarship', 'Research', 'Infrastructure']),
+    projectType: t.enum('project_type', ['Scholarship', 'Research', 'Infrastructure']),
     createdBy: t.uuid().foreignKey(() => UserTable, 'id'),
-    alumniDonors: t.integer().default(0),
+    alumniDonors: t.array(t.uuid()).default([]),
   }));
 }
 

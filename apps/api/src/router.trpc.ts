@@ -5,6 +5,7 @@ import { CloudinaryImageController } from "./controllers/cloudinaryImage.control
 import { profileController } from "./controllers/profile.controller";
 import { jobPostingController } from "./controllers/jobPosting.controller";
 import { jobApplicationController } from "./controllers/jobApplication.controller";
+import { donationsController } from "./controllers/donations.controller";
 
 export const trpcRouter = router({
   auth: authApi,
@@ -15,7 +16,9 @@ export const trpcRouter = router({
   addImage: CloudinaryImageController.uploadImage,
   profile: profileController,
   jobPosting: jobPostingController,
-  jobApplication: jobApplicationController
+  jobApplication: jobApplicationController,
+  donation: donationsController,
+  
 });
 
 export type ApiRouter = typeof trpcRouter;
