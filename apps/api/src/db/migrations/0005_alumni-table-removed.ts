@@ -2,9 +2,9 @@ import { change } from '../dbScript';
 
 change(async (db) => {
   await db.changeTable('user', (t) => ({
-    department: t.add(t.string()),
+    department: t.add(t.string().nullable()),
     linkedin_profile: t.add(t.string().nullable()),
-    graduation_year: t.add(t.integer()),
+    graduation_year: t.add(t.integer().nullable()),
     current_location: t.add(t.string().nullable()),
     mobileNumber: t.add(t.string().nullable()),
     profilePicture: t.add(t.string().nullable()),
