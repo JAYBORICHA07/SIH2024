@@ -1,6 +1,5 @@
 import { Queryable, Selectable, Updatable } from "orchid-orm";
 import { BaseTable } from "./baseTable";
-import { AlumniProfileTable } from "./alumniProfile.table";
 import { UserTable } from "./user.table";
 
 export class EventsTable extends BaseTable {
@@ -12,13 +11,16 @@ export class EventsTable extends BaseTable {
       .default(t.sql`gen_random_uuid()`),
     event_name: t.string().trim(),
     description: t.text(),
-    event_date: t.date(),
+    event_date: t.string(),
+    event_time: t.string().trim(),
     location: t.string().trim(),
+    event_type: t.string().trim(),
+    capacity: t.string().trim(),
+    attendees: t.array(t.uuid()).nullable(),
     organizer_id: t
       .uuid()
-      .foreignKey(() => UserTable, 'id') 
+      .foreignKey(() => UserTable, "id")
       .nullable(),
-    registration_url: t.string().nullable(),
   }));
 }
 
