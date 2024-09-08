@@ -1,9 +1,9 @@
 import Card from "@/components/card";
-import { useUserInfo } from "@/store/userStore";
 import { trpcFetch } from "@/trpc/trpcFetch";
 import {
   BankOutlined,
   EnvironmentOutlined,
+  LinkedinOutlined,
   MailOutlined,
   MobileOutlined,
   UserOutlined,
@@ -28,24 +28,22 @@ import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
 type UserProfileType = {
-  collegeId?: string;
-  currCompany?: string;
-  currRole?: string;
-  currentLocation?: string;
-  department?: string;
+  collegeId: string | null;
+  currCompany: string | null;
+  currRole: string | null;
+  currentLocation: string | null;
+  department: string | null;
   email: string;
-  isVerified: false;
-  mobileNumber?: string;
+  isVerified: boolean;
+  mobileNumber: string | null;
   name: string;
-  passoutYear?: string;
-  profilePicture?: string;
-  role?: string;
+  profilePicture: string | null;
+  linkedinProfile: string | null;
+  graduationYear: string | null;
 };
 export type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
 export function UserPage() {
-  const { user: userProfile } = useUserInfo();
-
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [editing, setEditing] = useState(false);
   const [isImageUploading, setIsImageUploading] = useState(false);
@@ -54,15 +52,13 @@ export function UserPage() {
   const [form] = useForm<UserProfileType>();
 
   useEffect(() => {
-    trpcFetch.getProfile.query()
-    .then((data) => {
-      if(data)
-        form.setFieldsValue(data);
-      else{
-        userProfile && form.setFieldsValue(userProfile);
-      }
-    })
-    
+    trpcFetch.getProfile.query().then((data) => {
+      form.setFieldsValue({
+        ...data,
+        graduationYear: data.graduationYear?.toString() ?? "",
+      });
+    });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -119,10 +115,14 @@ export function UserPage() {
   };
 
   const onFinish = async (values: UserProfileType) => {
-    try{
-      await trpcFetch.profileUpdate.query(values);
+    console.info(values);
+    try {
+      await trpcFetch.profileUpdate.query({
+        ...values,
+      });
+
       message.success("Profile updated successfully!");
-    }catch(e){
+    } catch (_) {
       message.error("Failed to update profile!");
       return;
     }
@@ -167,38 +167,96 @@ export function UserPage() {
                   level={isMobile ? 3 : 1}
                   style={{ margin: 0 }}
                 >
-                  {userProfile?.name}
+                  {form.getFieldValue("name")}
                 </Typography.Title>
-                <Typography.Title
-                  level={isMobile ? 4 : 2}
-                  style={{ margin: 0 }}
-                >
-                  Class of {userProfile?.passoutYear}
-                </Typography.Title>
+                {editing ? (
+                  <Flex
+                    align="center"
+                    gap={"small"}
+                    justify="center"
+                    className="w-full"
+                  >
+                    <Form.Item
+                      name="graduationYear"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input your Passout Year!",
+                        },
+                      ]}
+                      style={{ margin: 0, width: "100%" }}
+                    >
+                      <Input
+                        size="large"
+                        placeholder="Passout Year"
+                        disabled={!editing}
+                      />
+                    </Form.Item>
+                  </Flex>
+                ) : (
+                  <Typography.Title
+                    level={isMobile ? 4 : 2}
+                    style={{ margin: 0 }}
+                  >
+                    Class of {form.getFieldValue("graduationYear")}
+                  </Typography.Title>
+                )}
               </Flex>
             </Flex>
           </Flex>
           <Divider />
           <Flex vertical={true} gap={"small"} className="w-full">
             <Typography.Title level={3}>About</Typography.Title>
-            <div className="w-full">
+            <Flex className="w-full" vertical>
               <Form.Item
-                name="about"
+                name="name"
                 rules={[
                   {
                     required: true,
-                    message: "Please input your about!",
+                    message: "Please input your name!",
                   },
                 ]}
               >
-                <Input.TextArea
+                <Input
                   disabled={!editing}
                   size="large"
-                  rows={4}
                   maxLength={100}
+                  placeholder="Name"
                 />
               </Form.Item>
-            </div>
+              <Form.Item
+                name="department"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please type your department!",
+                  },
+                ]}
+              >
+                <Input
+                  disabled={!editing}
+                  size="large"
+                  maxLength={100}
+                  placeholder="Department"
+                />
+              </Form.Item>
+              <Form.Item
+                name="collegeId"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please type your enrollment no!",
+                  },
+                ]}
+              >
+                <Input
+                  disabled={!editing}
+                  size="large"
+                  maxLength={100}
+                  placeholder="Enrollment No"
+                />
+              </Form.Item>
+            </Flex>
           </Flex>
           <Flex
             vertical={isMobile}
@@ -261,7 +319,7 @@ export function UserPage() {
               >
                 <EnvironmentOutlined style={{ fontSize: "24px" }} />
                 <Form.Item
-                  name="location"
+                  name="currentLocation"
                   rules={[
                     {
                       required: true,
@@ -330,6 +388,30 @@ export function UserPage() {
                   />
                 </Form.Item>
               </Flex>
+              <Flex
+                align="center"
+                justify="center"
+                gap={"small"}
+                className="w-full"
+              >
+                <LinkedinOutlined style={{ fontSize: "24px" }} />
+                <Form.Item
+                  name="linkedinProfile"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your current role!",
+                    },
+                  ]}
+                  style={{ margin: 0, width: "100%" }}
+                >
+                  <Input
+                    size="large"
+                    placeholder="LinkedIn URL"
+                    disabled={!editing}
+                  />
+                </Form.Item>
+              </Flex>
             </Flex>
           </Flex>
           <Flex
@@ -337,7 +419,7 @@ export function UserPage() {
             className="w-full"
             justify="end"
             align="center"
-            style={{ marginTop: isMobile ? "20px" : "0px" }}
+            style={{ marginTop: isMobile ? "20px" : "10px", padding: "5px" }}
           >
             {editing ? (
               <Button htmlType="submit" type="primary" size="large">

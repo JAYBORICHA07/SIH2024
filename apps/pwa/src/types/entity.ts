@@ -14,7 +14,7 @@ export interface UserInfo {
     isVerified: false;
     mobileNumber?: string;
     name: string;
-    passoutYear?: string;
+    gradutionYear?: string;
     profilePicture?: string;
     role?: string;
   };

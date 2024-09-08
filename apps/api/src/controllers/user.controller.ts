@@ -1,12 +1,7 @@
-import {
-  adminProcedure,
-  protectedProcedure,
-  publicProcedure,
-  router,
-} from "../context.trpc";
+import { protectedProcedure, publicProcedure, router } from "../context.trpc";
 
 export const userController = router({
-  all: adminProcedure.query(() => {
+  getAll: protectedProcedure.query(() => {
     return {
       name: "All",
     };

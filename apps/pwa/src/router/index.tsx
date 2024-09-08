@@ -166,7 +166,7 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
       {
         caseSensitive: false,
         index: true,
-        path: "/event/public",
+        path: "/event/public/:id",
         lazy: async () => {
           const { EventDetails } = await import(
             "../pages/event/EventPublic.Link"
@@ -183,7 +183,7 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
       {
         caseSensitive: false,
         index: true,
-        path: "/event/register",
+        path: "/event/register/:id",
         lazy: async () => {
           const { EventRegistration } = await import(
             "../pages/event/EventRegister.Page"
