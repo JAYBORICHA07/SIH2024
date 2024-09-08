@@ -1,6 +1,5 @@
 import { Queryable, Selectable, Updatable } from "orchid-orm";
 import { BaseTable } from "./baseTable";
-import { AlumniProfileTable } from "./alumniProfile.table";
 import { UserTable } from "./user.table";
 
 export class EventsTable extends BaseTable {

@@ -1,6 +1,6 @@
 import { Queryable, Selectable, Updatable } from "orchid-orm";
 import { BaseTable } from "./baseTable";
-import { AlumniProfileTable } from "./alumniProfile.table";
+import { UserTable } from "./user.table";
 
 export class JobPostingsTable extends BaseTable {
   readonly table = "job_postings";
@@ -11,7 +11,7 @@ export class JobPostingsTable extends BaseTable {
       .default(t.sql`gen_random_uuid()`),
     posted_by: t
       .uuid()
-      .foreignKey(() => AlumniProfileTable, 'alumni_id'), 
+      .foreignKey(() => UserTable, 'id'), 
     job_title: t.string().trim(),
     company_name: t.string().trim(),
     location: t.string().trim(),

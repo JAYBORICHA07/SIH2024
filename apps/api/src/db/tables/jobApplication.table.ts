@@ -1,7 +1,7 @@
 import { Queryable, Selectable, Updatable } from "orchid-orm";
 import { BaseTable } from "./baseTable";
-import { AlumniProfileTable } from "./alumniProfile.table";
 import { JobPostingsTable } from "./jobPosting.table";
+import { UserTable } from "./user.table";
 
 export class JobApplicationTable extends BaseTable {
   readonly table = "job_application";
@@ -14,7 +14,7 @@ export class JobApplicationTable extends BaseTable {
         .foreignKey(() => JobPostingsTable, 'job_id'),
     alumni_id: t
         .uuid()
-        .foreignKey(() => AlumniProfileTable, 'alumni_id'),
+        .foreignKey(() => UserTable, 'id'),
     application_date: t
         .timestamp(),
     status: t

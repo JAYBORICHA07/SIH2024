@@ -1,6 +1,6 @@
 import { Queryable, Selectable, Updatable } from "orchid-orm";
 import { BaseTable } from "./baseTable";
-import { AlumniProfileTable } from "./alumniProfile.table";
+import { UserTable } from "./user.table";
 
 export class PaymentTransactionsTable extends BaseTable {
     readonly table = "payment_transactions";
@@ -10,7 +10,7 @@ export class PaymentTransactionsTable extends BaseTable {
             .primaryKey().default(t.sql`gen_random_uuid()`),
         alumni_id: t
             .uuid()
-            .foreignKey(() => AlumniProfileTable, 'alumni_id'),
+            .foreignKey(() => UserTable, 'id'),
         amount: t.decimal(10, 2),
         payment_method: t.enum('payment_method', ['Credit Card', 'UPI', 'Bank Transfer']),
         payment_status: t.enum('payment_status', ['Pending', 'Completed', 'Failed']),
