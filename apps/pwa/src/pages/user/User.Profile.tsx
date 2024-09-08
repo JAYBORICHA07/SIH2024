@@ -31,6 +31,7 @@ type UserProfileType = {
   collegeId?: string;
   currCompany?: string;
   currRole?: string;
+  currentLocation?: string;
   department?: string;
   email: string;
   isVerified: false;
@@ -53,7 +54,15 @@ export function UserPage() {
   const [form] = useForm<UserProfileType>();
 
   useEffect(() => {
-    userProfile && form.setFieldsValue(userProfile);
+    trpcFetch.getProfile.query()
+    .then((data) => {
+      if(data)
+        form.setFieldsValue(data);
+      else{
+        userProfile && form.setFieldsValue(userProfile);
+      }
+    })
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -110,8 +119,13 @@ export function UserPage() {
   };
 
   const onFinish = async (values: UserProfileType) => {
-    console.info(values);
-    message.success("Profile updated successfully!");
+    try{
+      await trpcFetch.profileUpdate.query(values);
+      message.success("Profile updated successfully!");
+    }catch(e){
+      message.error("Failed to update profile!");
+      return;
+    }
     setEditing(false);
   };
 

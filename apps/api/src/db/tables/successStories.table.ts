@@ -1,19 +1,19 @@
 import { Queryable, Selectable, Updatable } from "orchid-orm";
 import { BaseTable } from "./baseTable";
-import { AlumniProfileTable } from "./alumniProfile.table";
+import { UserTable } from "./user.table";
 
 export class SuccessStoriesTable extends BaseTable {
   readonly table = "success_stories";
   columns = this.setColumns((t) => ({
-    story_id: t
+    storyId: t
         .uuid()
         .primaryKey().default(t.sql`gen_random_uuid()`),
-    alumni_id: t
+    alumniId: t
         .uuid()
-        .foreignKey(() => AlumniProfileTable, 'alumni_id'),
-    story_title: t.string().trim(),
-    story_content: t.text(),
-    posted_at: t.timestamp(),
+        .foreignKey(() => UserTable, 'id'),
+    storyTitle: t.string().trim(),
+    storyContent: t.text(),
+    postedAt: t.timestamp(),
   }));
 }
 
