@@ -1,23 +1,27 @@
 import { Queryable, Selectable, Updatable } from "orchid-orm";
 import { BaseTable } from "./baseTable";
 import { UserTable } from "./user.table";
+import { Attendees, AttendeesTable } from "./attendees.table";
 
 export class EventsTable extends BaseTable {
   readonly table = "events";
   columns = this.setColumns((t) => ({
-    event_id: t
+    eventId: t
       .uuid()
       .primaryKey()
       .default(t.sql`gen_random_uuid()`),
-    event_name: t.string().trim(),
+    eventTitle: t.string().trim(),
+    eventDate: t.string().trim(),
+    eventType: t.string().trim(),
+    eventTime: t.string().trim(),
+    capacity: t.string().trim(),
     description: t.text(),
-    event_date: t.date(),
     location: t.string().trim(),
-    organizer_id: t
+    organizerId: t
       .uuid()
       .foreignKey(() => UserTable, 'id') 
       .nullable(),
-    registration_url: t.string().nullable(),
+    attendeesId: t.array(t.uuid().unique()),
   }));
 }
 

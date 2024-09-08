@@ -7,15 +7,15 @@ import { UserTable } from "./user.table";
 export class DonationsTable extends BaseTable {
     readonly table = "donations";
     columns = this.setColumns((t) => ({
-        donation_id: t.uuid().primaryKey().default(t.sql`gen_random_uuid()`),
-        project_id: t.uuid().foreignKey(() => ProjectsTable, 'project_id'),
-        payment_id: t.uuid().foreignKey(() => PaymentTransactionsTable, 'transaction_id'),
+        donationId: t.uuid().primaryKey().default(t.sql`gen_random_uuid()`),
+        projectId: t.uuid().foreignKey(() => ProjectsTable, 'projectId'),
+        paymentId: t.uuid().foreignKey(() => PaymentTransactionsTable, 'transactionId'),
         donator: t.uuid().foreignKey(() => UserTable, 'id'),
         amount: t.decimal(),
-        donation_type: t.enum('donation_type', ['One-time', 'Recurring']),
+        donationType: t.enum('donation_type', ['One-time', 'Recurring']),
         frequency: t.enum('frequency', ['Monthly', 'Quarterly', 'Yearly']),
-        donation_date: t.timestamp(),
-        receipt_url: t.string().nullable()    
+        donationDate: t.timestamp(),
+        receiptUrl: t.string().nullable()    
     }))
 }
 

@@ -104,9 +104,9 @@ change(async (db) => {
 change(async (db) => {
   await db.dropTable('alumni_profile', (t) => ({
     alumniId: t.uuid().primaryKey().foreignKey('user', 'id').default(t.sql`gen_random_uuid()`),
-    department: t.varchar(255),
+    department: t.varchar(255).nullable(),
     linkedinProfile: t.varchar(255).nullable(),
-    graduationYear: t.integer(),
+    graduationYear: t.integer().nullable(),
     currentLocation: t.varchar(255).nullable(),
     mobileNumber: t.varchar(255).nullable(),
     profilePicture: t.varchar(255).nullable(),

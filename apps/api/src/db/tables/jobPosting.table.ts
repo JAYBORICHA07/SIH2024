@@ -5,21 +5,20 @@ import { UserTable } from "./user.table";
 export class JobPostingsTable extends BaseTable {
   readonly table = "job_postings";
   columns = this.setColumns((t) => ({
-    job_id: t
+    jobId: t
       .uuid()
       .primaryKey()
       .default(t.sql`gen_random_uuid()`),
-    posted_by: t
+    postedBy: t
       .uuid()
       .foreignKey(() => UserTable, 'id'), 
-    job_title: t.string().trim(),
-    company_name: t.string().trim(),
+    jobTitle: t.string().trim(),
+    companyName: t.string().trim(),
     location: t.string().trim(),
     description: t.text(),
-    salary_range: t.string().trim(),
-    job_type: t.string().trim(),
-    application_url: t.string().nullable(),
-    created_at: t.timestamp(),
+    salaryRange: t.string().trim(),
+    jobType: t.string().trim(),
+    createdAt: t.timestamp(),
   }));
 }
 

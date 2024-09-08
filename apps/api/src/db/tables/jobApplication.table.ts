@@ -6,16 +6,16 @@ import { UserTable } from "./user.table";
 export class JobApplicationTable extends BaseTable {
   readonly table = "job_application";
   columns = this.setColumns((t) => ({
-    application_id: t
+    applicationId: t
         .uuid()
         .primaryKey().default(t.sql`gen_random_uuid()`),
-    job_id: t
+    jobId: t
         .uuid()
-        .foreignKey(() => JobPostingsTable, 'job_id'),
-    alumni_id: t
+        .foreignKey(() => JobPostingsTable, 'jobId'),
+    alumniId: t
         .uuid()
         .foreignKey(() => UserTable, 'id'),
-    application_date: t
+    applicationDate: t
         .timestamp(),
     status: t
         .enum('status', ['Submitted', 'interview', 'Hired', 'Rejected']),
