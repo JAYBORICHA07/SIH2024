@@ -28,7 +28,6 @@ export const eventController = router({
         eventTime: input.time,
         eventType: input.type,
         location: input.location,
-        attendeesId: [],
       });
       console.info(event);
       return event;
