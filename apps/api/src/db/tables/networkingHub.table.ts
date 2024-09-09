@@ -20,7 +20,5 @@ export class NetworkingHub extends BaseTable {
             .enum('status_from', ['Sent', 'connected', 'Pending']),
         connectionType: t
             .enum('connection_type', ['Professional', 'Mentorship']),
-        status: t
-            .enum('status', ['Pending', 'Active']),
     }))
 } 

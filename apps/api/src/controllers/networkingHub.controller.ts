@@ -1,15 +1,30 @@
 import z from "zod";
 import { protectedProcedure, router } from "../context.trpc";
 import { db } from "../db/db.config";
+import { connect } from "http2";
 
 export const NetworkingHubSingleInput = z.object({
     alumniId1: z.string().trim(),
-    alumniId2: z.string().trim(),
+    alumniId2: z.string().trim()
 });
 
 export const NetworkingHubForAlumniInput = z.object({
-    alumniId: z.string().trim(),
+    alumniId: z.string().trim()
 })
+
+export const NetworkCreateInput = z.object({
+    alumniId1: z.string().trim(),
+    alumniId2: z.string().trim(),  
+})
+
+export const NetworkingHubUpdateConnectedInput = NetworkCreateInput
+    .extend({
+        connectionId: z.string().trim(),
+    });
+
+export const NetworkingHubDelete = z.object({
+    connectionId: z.string().trim(),
+});
 
 export const networkingHubController = router({
     // getNetworkingHubs: protectedProcedure
@@ -23,45 +38,45 @@ export const networkingHubController = router({
         .query(async ({ input, ctx }) => {
             const networkingHub = await db.networking_hub
                 .where({
-                    hubId: input.hubId,
+                    alumniId1: input.alumniId1,
+                    alumniId2: input.alumniId2,
                 })
             return networkingHub[0];
         }),
     createNetworkingHub: protectedProcedure
-        .input(NetworkingHubInput)
+        .input(NetworkCreateInput)
         .query(async ({ input, ctx }) => {
+            const fromAlumni = ctx.user?.user.id! === input.alumniId1 ? 'Sent' : 'Pending';
             const networkingHub = await db.networking_hub
                 .create({
-                    hubName: input.hubName,
-                    hubDescription: input.hubDescription,
-                    hubType: input.hubType,
-                    createdBy: ctx.user?.user.id!,
-                    members: [],
+                    alumniId1: input.alumniId1,
+                    alumniId2: input.alumniId2,
+                    statusFrom1: fromAlumni,
+                    statusFrom2: fromAlumni === 'Sent' ? 'Pending' : 'Sent',
+                    connectionType: 'Professional'
                 });
             return networkingHub;
         }),
+
     updateNetworkingHub: protectedProcedure
-        .input(NetworkingHubUpdateInput)
+        .input(NetworkingHubUpdateConnectedInput)
         .query(async ({ input, ctx }) => {
             const networkingHub = await db.networking_hub
                 .where({
-                    hubId: input.hubId,
+                    connectionId: input.connectionId,
                 })
                 .update({
-                    hubName: input.hubName,
-                    hubDescription: input.hubDescription,
-                    hubType: input.hubType,
-                    createdBy: ctx.user?.user.id!,
-                    members: input.members,
+                    statusFrom1: 'connected',
+                    statusFrom2: 'connected',
                 });
             return networkingHub;
         }),
     deleteNetworkingHub: protectedProcedure
-        .input(NetworkingHubSingleInput)
+        .input(NetworkingHubDelete)
         .query(async ({ input, ctx }) => {
             const networkingHub = await db.networking_hub
                 .where({
-                    hubId: input.hubId,
+                    connectionId: input.connectionId,
                 })
                 .delete();
             return networkingHub;
