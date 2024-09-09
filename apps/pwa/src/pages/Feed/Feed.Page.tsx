@@ -20,7 +20,7 @@ const { TabPane } = Tabs;
 import { useRouter } from "@/router/hooks";
 const { Meta } = Card;
 
-export type User = {
+export interface User {
   id: string;
   name: string;
   collegeId: string | null;
@@ -33,7 +33,7 @@ export type User = {
   graduationYear: number | null;
   profilePicture: string | null;
   role: string | null;
-};
+}
 
 type Job = {
   jobId: string; // UUID
@@ -48,15 +48,11 @@ type Job = {
 
 export const NetworkingHome: React.FC = () => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
-  const [users, setUsers] = useState<User[]>([]);
   const [user, setUser] = useState<User>();
   const [jobs, setJobs] = useState<Job[]>([]);
   const router = useRouter();
 
   useEffect(() => {
-    trpcFetch.getAllProfiles.query().then((data) => {
-      setUsers(data);
-    });
     trpcFetch.getAllJobs.query().then((data) => {
       setJobs(data);
     });
@@ -76,7 +72,7 @@ export const NetworkingHome: React.FC = () => {
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto", padding: 24 }}>
       <Title level={2} style={{ marginBottom: 24 }}>
-        Networking Hub
+        FEED
       </Title>
 
       <Space
@@ -108,45 +104,6 @@ export const NetworkingHome: React.FC = () => {
       </Space>
 
       <Tabs defaultActiveKey="connections">
-        <TabPane tab="Connections" key="connections">
-          <Row gutter={[16, 16]}>
-            {users?.map((user) => (
-              <Col xs={24} sm={12} lg={8} key={user.id}>
-                <Card
-                  style={{
-                    padding: 0,
-                  }}
-                  actions={[
-                    <Button
-                      key="connect"
-                      type="primary"
-                      style={{ width: "80%" }}
-                    >
-                      Connect
-                    </Button>,
-                  ]}
-                >
-                  <Meta
-                    avatar={<Avatar src={user?.profilePicture ?? ""} />}
-                    title={`${user.name}`}
-                    description={
-                      <>
-                        <Text type="secondary">
-                          Class of {user?.graduationYear}
-                        </Text>
-                        <br />
-                        <Text>
-                          {user.currRole} at {user.currCompany}
-                        </Text>
-                      </>
-                    }
-                  />
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        </TabPane>
-
         <TabPane tab="Job Postings" key="jobs">
           <Space direction="vertical" size="middle" style={{ display: "flex" }}>
             <Row gutter={[16, 16]}>

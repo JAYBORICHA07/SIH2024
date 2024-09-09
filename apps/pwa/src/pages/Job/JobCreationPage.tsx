@@ -64,7 +64,7 @@ export const JobCreationPage: React.FC = () => {
             const createdJob = await trpcFetch.createJob.query(newJob);
             console.info(createdJob);
             message.success("Job created successfully");
-            router.push(`/networking/home`);
+            router.push(`/feed/home`);
             // form.resetFields();
         } catch (error) {
             console.error("Error creating job:", error);

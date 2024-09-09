@@ -16,8 +16,6 @@ export const eventController = router({
   createEvent: protectedProcedure
     .input(eventCreationInput)
     .query(async ({ input, ctx }) => {
-      console.info(input);
-      console.info(ctx.user?.user.id);
 
       const event = await db.events.create({
         capacity: input.capacity,
@@ -34,9 +32,12 @@ export const eventController = router({
     }),
 
   getEventById: publicProcedure.input(z.string()).query(async ({ input }) => {
-    console.info(input);
     const event = await db.events.findBy({ eventId: input });
-    console.info(event);
     return event;
   }),
+
+  getAllEvents: protectedProcedure.query(async () => {
+    const events = await db.events.selectAll();
+    return events;
+  })
 });

@@ -175,7 +175,7 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
     ],
   },
   {
-    path: "/networking",
+    path: "/feed",
     element: <PageWrapper component={<DashboardLayout />} />,
     errorElement: <ErrorPage />,
     showInNav: true,
@@ -183,18 +183,43 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
       {
         caseSensitive: false,
         index: true,
-        path: "/networking/home",
+        path: "/feed/home",
         lazy: async () => {
           const { NetworkingHome } = await import(
-            "../pages/Netwotking/NetworkingHome.Page"
+            "../pages/Feed/Feed.Page"
           );
           return { element: <PageWrapper component={<NetworkingHome />} /> };
         },
         icon: "ph:chart-pie-slice-duotone",
-        navPath: "/networking/home",
-        navLabel: "Networking Home",
-        title: "Networking Home",
-        subheader: "/networking/home",
+        navPath: "/feed/home",
+        navLabel: "Feed",
+        title: "Feed",
+        subheader: "/feed/home",
+        showInNav: true,
+      },
+    ],
+  },
+  {
+    path: "/search",
+    element: <PageWrapper component={<DashboardLayout />} />,
+    errorElement: <ErrorPage />,
+    showInNav: true,
+    children: [
+      {
+        caseSensitive: false,
+        index: true,
+        path: "/search/connection",
+        lazy: async () => {
+          const { SearchConnection } = await import(
+            "../pages/Networking/SearchConnection.page"
+          );
+          return { element: <PageWrapper component={<SearchConnection />} /> };
+        },
+        icon: "ph:chart-pie-slice-duotone",
+        navPath: "/search/connection",
+        navLabel: "Connection",
+        title: "Connection",
+        subheader: "/search/connection",
         showInNav: true,
       },
     ],
@@ -279,7 +304,7 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
         navLabel: "Public Event",
         title: "Public Event",
         subheader: "Public Event",
-        showInNav: true,
+        showInNav: false,
       },
       {
         caseSensitive: false,
@@ -296,7 +321,7 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
         navLabel: "Register Event",
         title: "Event Registration",
         subheader: "Event Registration",
-        showInNav: true,
+        showInNav: false,
       },
       {
         caseSensitive: false,
