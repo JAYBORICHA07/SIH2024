@@ -141,7 +141,7 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
     ],
   },
   {
-    path: "/jobs",
+    path: "/job",
     element: <PageWrapper component={<DashboardLayout />} />,
     errorElement: <ErrorPage />,
     showInNav: true,
@@ -149,7 +149,7 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
       {
         caseSensitive: false,
         index: true,
-        path: "/jobs/create",
+        path: "/job/create",
         lazy: async () => {
           const { JobCreationPage } = await import(
             "../pages/Job/JobCreationPage"
@@ -157,7 +157,7 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
           return { element: <PageWrapper component={< JobCreationPage />} /> };
         },
         icon: "ph:chart-pie-slice-duotone",
-        navPath: "/jobs/create",
+        navPath: "/job/create",
         navLabel: "Job Creation",
         title: "Job Creation",
         subheader: "/job/create",
@@ -166,7 +166,7 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
       {
         caseSensitive: false,
         index: true,
-        path: "/jobs/application",
+        path: "/job/application/:jobId",
         lazy: async () => {
           const { JobApplicationPage } = await import(
             "../pages/Job/JobApplicationPage"
@@ -174,11 +174,11 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
           return { element: <PageWrapper component={< JobApplicationPage />} /> };
         },
         icon: "ph:chart-pie-slice-duotone",
-        navPath: "/jobs/application",
+        navPath: "/job/application",
         navLabel: "Job Application",
         title: "Job Application",
         subheader: "/job/application",
-        showInNav: true,
+        showInNav: false,
       },
     ],
   },

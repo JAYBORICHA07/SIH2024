@@ -1,85 +1,132 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Typography, Form, Input, Radio, Button, message } from "antd";
-
+import { trpcFetch } from "@/trpc/trpcFetch";
+import { useRouter } from "@/router/hooks";
 const { Title, Paragraph } = Typography;
+import { useParams } from "react-router-dom";
 const { TextArea } = Input;
 
-// In a real application, you would fetch this data based on the event ID from the URL
-const eventData = {
-    id: "evt123456",
-    title: "Annual Alumni Gala",
-    date: "September 15, 2023",
-    time: "7:00 PM - 11:00 PM",
-    location: "Grand Ballroom, University Center",
+export type User = {
+    id: string;
+    name: string;
+    collegeId: string | null;
+    currCompany: string | null;
+    currRole: string | null;
+    department: string | null;
+    email: string | null;
+    isVerified: boolean;
+    mobileNumber: string | null;
+    graduationYear: number | null;
+    profilePicture: string | null;
+    role: string | null;
 };
 
-interface FormData {
-    name: string;
-    email: string;
-    phone: string;
-    graduationYear: string;
-    dietaryRestrictions: string;
-    attendeeType: string;
+// In a real application, you would fetch this data based on the event ID from the URL
+interface CreatedApplication {
+    jobId:string;
+    resumeUrl: string;
+    coverLetter: string;
+};
+
+interface ApplicationData {
+    resume: string;
+    coverLetter: string;
 }
 
 export const JobApplicationPage: React.FC = () => {
-    const [form] = Form.useForm<FormData>();
+    const [form] = Form.useForm<ApplicationData>();
+    const [user, setUser] = useState<User>();
+    const router = useRouter();
+    const {jobId}  = useParams();
 
-    const handleSubmit = async (values: FormData) => {
-        console.info("Submitting registration:", values);
-        message.success("Registration submitted successfully!");
+    const onFinish = async (values: ApplicationData) => {
+        try {
+            // Simulating API call to create event
+            const response = await new Promise<{ id: string }>((resolve) =>
+                setTimeout(
+                    () => resolve({ id: Math.random().toString(36).substr(2, 9) }),
+                    1000
+                )
+            );
+
+            const newApplication: CreatedApplication = {
+                jobId: jobId!,
+                resumeUrl:values.resume,
+                coverLetter:values.coverLetter,
+            };
+
+            const createdJob = await trpcFetch.jobApplication.createJobApplication.query(newApplication);
+            console.info(createdJob);
+            message.success("Applied Successfully");
+            router.push(`/networking/home`);
+            // form.resetFields();
+        } catch (error) {
+            console.error("Error applying job:", error);
+            message.error("Failed to apply job");
+        }
     };
+
+
+    useEffect(() => {
+        trpcFetch.getProfile.query().then((data) => {
+            setUser(data);
+        });
+    }, []);
+
+
+    // const handleSubmit = async (values: ApplicationData) => {
+    //     console.info("Submitting registration:", values);
+    //     message.success("Applied Successfully");
+    // };
 
     return (
         <div style={{ maxWidth: 800, margin: "0 auto", padding: 24 }}>
             <Card>
                 <Title level={3}>Apply For Job</Title>
                 <Paragraph>
-                    Please fill out the form below to apply for this position {eventData.title}
+                    Please fill out the form below to apply for this position 
                 </Paragraph>
-                <Form form={form} layout="vertical" onFinish={handleSubmit}>
+                <Form form={form} layout="vertical" onFinish={onFinish}>
                     <Form.Item
                         name="name"
-                        rules={[
-                            { required: true, message: "Please input your full name!" },
-                        ]}
+                        label="Name"
                     >
-                        <Input placeholder="Full Name" size="large" />
+                        <Input disabled placeholder={user?.name} size="large" />
                     </Form.Item>
 
                     <Form.Item
                         name="email"
-                        rules={[
-                            { required: true, message: "Please input your email!" },
-                            { type: "email", message: "Please enter a valid email address!" },
-                        ]}
+                        label="Email"
                     >
-                        <Input placeholder="Email" size="large" />
+                        <Input disabled placeholder={user?.email!} size="large" />
                     </Form.Item>
 
                     <Form.Item
                         name="phone"
-                        rules={[
-                            { required: true, message: "Please input your phone number!" },
-                        ]}
+                        label="Phone Number"
                     >
-                        <Input placeholder="Phone Number" size="large" />
+                        <Input placeholder={user?.mobileNumber!} disabled size="large" />
                     </Form.Item>
 
                     <Form.Item
                         name="resume"
+                        label="Resume URL"
                         rules={[
-                            { required: true, message: "Please input your resume url!" },
+                            { required: true, message: "Please input your google drive resume url!" },
                         ]}
                     >
-                        <Input placeholder="Resume URL" size="large" />
+                        <Input placeholder="Enter google drive link of your Resume" size="large" />
                     </Form.Item>
 
-                    <Form.Item name="coverletter" rules={[{ required: true }]}>
+                    <Form.Item
+                        name="coverLetter"
+                        label="Cover Letter"
+                        rules={[{ required: true }
+                        ]}>
                         <TextArea
                             size="large"
-                            rows={4}
-                            placeholder="Cover Letter (Tell us why you are interested in this position and what makes you a great candidate...)"
+                            rows={5}
+                            placeholder="Tell us why you are interested in this position and what makes you a great candidate..."
                         />
                     </Form.Item>
 
