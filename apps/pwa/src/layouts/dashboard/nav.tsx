@@ -100,8 +100,8 @@ export default function Nav(props: Props) {
     >
       <div className="relative flex h-20 items-center justify-center py-4">
         <MotionContainer className="flex items-center">
-          <Logo className="h-10 w-10" />
-          {themeLayout !== ThemeLayout.Mini && (
+          <Logo/>
+          {/* {themeLayout !== ThemeLayout.Mini && (
             <m.div variants={slideInLeft}>
               <span
                 className="ml-2 text-xl font-bold"
@@ -110,7 +110,7 @@ export default function Nav(props: Props) {
                 {APP_NAME}
               </span>
             </m.div>
-          )}
+          )} */}
         </MotionContainer>
         <button
           onClick={toggleCollapsed}
