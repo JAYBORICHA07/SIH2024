@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Button,
   Card,
@@ -13,6 +13,8 @@ import {
 } from "antd";
 import { EnvironmentOutlined } from "@ant-design/icons";
 import { Dayjs } from "dayjs";
+import { trpcFetch } from "@/trpc/trpcFetch";
+import { useRouter } from "@/router/hooks";
 
 interface EventData {
   title: string;
@@ -32,6 +34,8 @@ interface CreatedEvent {
   time: string;
   location: string;
   type: string;
+  description: string;
+  capacity: string;
 }
 
 const { Option } = Select;
@@ -39,7 +43,7 @@ const { TextArea } = Input;
 
 export const EventCreation: React.FC = () => {
   const [form] = Form.useForm<EventData>();
-  const [createdEvent, setCreatedEvent] = useState<CreatedEvent | null>(null);
+  const router = useRouter();
 
   const onFinish = async (values: EventData) => {
     try {
@@ -58,11 +62,15 @@ export const EventCreation: React.FC = () => {
         time: `${values.startTime?.format("HH:mm")} - ${values.endTime?.format("HH:mm")}`,
         location: values.location,
         type: values.type,
+        description: values.description,
+        capacity: values.capacity,
       };
 
-      setCreatedEvent(newEvent);
+      const createdEvent = await trpcFetch.createEvent.query(newEvent);
+      console.info(createdEvent);
       message.success("Event created successfully");
-      form.resetFields();
+      router.push(`/event/public/${createdEvent.eventId}`);
+      // form.resetFields();
     } catch (error) {
       console.error("Error creating event:", error);
       message.error("Failed to create event");
@@ -205,38 +213,6 @@ export const EventCreation: React.FC = () => {
           </Flex>
         </Form>
       </Card>
-
-      {createdEvent && (
-        <Card
-          title="Event Created Successfully"
-          extra={
-            <span>Your event has been created with the following details:</span>
-          }
-          style={{ marginTop: 24 }}
-        >
-          <p>
-            <strong>Event ID:</strong> {createdEvent.id}
-          </p>
-          <p>
-            <strong>Title:</strong> {createdEvent.title}
-          </p>
-          <p>
-            <strong>Date:</strong> {createdEvent.date}
-          </p>
-          <p>
-            <strong>Time:</strong> {createdEvent.time}
-          </p>
-          <p>
-            <strong>Location:</strong> {createdEvent.location}
-          </p>
-          <p>
-            <strong>Type:</strong> {createdEvent.type}
-          </p>
-          <Button size="large" onClick={() => setCreatedEvent(null)}>
-            Clear
-          </Button>
-        </Card>
-      )}
     </div>
   );
 };

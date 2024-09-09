@@ -141,6 +141,31 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
     ],
   },
   {
+    path: "/jobs",
+    element: <PageWrapper component={<DashboardLayout />} />,
+    errorElement: <ErrorPage />,
+    showInNav: true,
+    children: [
+      {
+        caseSensitive: false,
+        index: true,
+        path: "/jobs/create",
+        lazy: async () => {
+          const { JobCreationPage } = await import(
+            "../pages/Job/JobCreationPage"
+          );
+          return { element: <PageWrapper component={< JobCreationPage />} /> };
+        },
+        icon: "ph:chart-pie-slice-duotone",
+        navPath: "/jobs/create",
+        navLabel: "Job Creation",
+        title: "Job Creation",
+        subheader: "/job/create",
+        showInNav: true,
+      },
+    ],
+  },
+  {
     path: "/event",
     element: <PageWrapper component={<DashboardLayout />} />,
     errorElement: <ErrorPage />,
@@ -166,7 +191,7 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
       {
         caseSensitive: false,
         index: true,
-        path: "/event/public",
+        path: "/event/public/:id",
         lazy: async () => {
           const { EventDetails } = await import(
             "../pages/event/EventPublic.Link"
@@ -183,7 +208,7 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
       {
         caseSensitive: false,
         index: true,
-        path: "/event/register",
+        path: "/event/register/:id",
         lazy: async () => {
           const { EventRegistration } = await import(
             "../pages/event/EventRegister.Page"
