@@ -1,7 +1,9 @@
 import { Flex, FlexProps, theme, Typography } from "antd";
 import { Link } from "react-router-dom";
-import { CSSProperties } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 import { APP_NAME } from "@/appConfig";
+import { ThemeMode } from "@/types/enum";
+import { useSettings } from "@/store/settingStore";
 
 type LogoProps = {
   color?: CSSProperties["color"];
@@ -26,35 +28,30 @@ export const Logo = ({
     token: { borderRadius },
   } = theme.useToken();
 
+  const settings = useSettings()
+  const { themeMode } = settings;
+  const [themee, setThemee] = useState(themeMode);
+
+  useEffect(() => {
+    setThemee(themeMode)
+  },[themeMode])
+
   return asLink ? (
     <Link to={href || "#"} className="logo-link">
       <Flex gap={others.gap || "small"} align="center" {...others}>
         <img
-          src="/favicon/android-chrome-512x512.png"
+          src={themee === ThemeMode.Light ? "/favicon/Light.png" : "/favicon/Dark.png"}
           alt="Logo"
-          height={imgSize?.h || 48}
+          height={imgSize?.h || 128}
         />
-        <Typography.Title
-          level={5}
-          type="secondary"
-          style={{
-            color,
-            margin: 0,
-            padding: `4px 8px`,
-            backgroundColor: bgColor,
-            borderRadius,
-          }}
-        >
-          {APP_NAME}
-        </Typography.Title>
       </Flex>
     </Link>
   ) : (
     <Flex gap={others.gap || "small"} align="center" {...others}>
       <img
-        src="/favicon/android-chrome-512x512.png"
+        src={themee === ThemeMode.Light ? "/favicon/Light.png" : "/favicon/Dark.png"}
         alt="Logo"
-        height={imgSize?.h || 48}
+        height={imgSize?.h || 128}
       />
     </Flex>
   );
