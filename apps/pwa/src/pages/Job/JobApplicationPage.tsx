@@ -58,7 +58,7 @@ export const JobApplicationPage: React.FC = () => {
             const createdJob = await trpcFetch.jobApplication.createJobApplication.query(newApplication);
             console.info(createdJob);
             message.success("Applied Successfully");
-            router.push(`/networking/home`);
+            router.push(`/feed/home`);
             // form.resetFields();
         } catch (error) {
             console.error("Error applying job:", error);

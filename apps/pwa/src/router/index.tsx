@@ -304,7 +304,7 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
         navLabel: "Public Event",
         title: "Public Event",
         subheader: "Public Event",
-        showInNav: true,
+        showInNav: false,
       },
       {
         caseSensitive: false,
@@ -321,7 +321,7 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
         navLabel: "Register Event",
         title: "Event Registration",
         subheader: "Event Registration",
-        showInNav: true,
+        showInNav: false,
       },
       {
         caseSensitive: false,

@@ -39,14 +39,6 @@ export const SearchConnection: React.FC = () => {
         });
     }, []);
 
-    // const handleApplication = (jobId: string) => {
-    //     if (!user?.mobileNumber) {
-    //         message.error("Please complete your profile first!")
-    //     } else {
-    //         router.push(`/job/application/${jobId}`);
-    //     }
-    // };
-
     const connectPerson = (alumniId: string) => {
         trpcFetch.networking.createNetworkingHub
             .query({ alumniId }).then(() => {
