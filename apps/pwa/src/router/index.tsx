@@ -141,6 +141,31 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
     ],
   },
   {
+    path: "/jobs",
+    element: <PageWrapper component={<DashboardLayout />} />,
+    errorElement: <ErrorPage />,
+    showInNav: true,
+    children: [
+      {
+        caseSensitive: false,
+        index: true,
+        path: "/jobs/create",
+        lazy: async () => {
+          const { JobCreationPage } = await import(
+            "../pages/Job/JobCreationPage"
+          );
+          return { element: <PageWrapper component={< JobCreationPage />} /> };
+        },
+        icon: "ph:chart-pie-slice-duotone",
+        navPath: "/jobs/create",
+        navLabel: "Job Creation",
+        title: "Job Creation",
+        subheader: "/job/create",
+        showInNav: true,
+      },
+    ],
+  },
+  {
     path: "/event",
     element: <PageWrapper component={<DashboardLayout />} />,
     errorElement: <ErrorPage />,
