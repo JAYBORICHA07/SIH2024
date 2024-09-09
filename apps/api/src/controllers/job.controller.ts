@@ -31,4 +31,9 @@ export const jobController = router({
       console.info(job);
       return job;
     }),
+
+  getAllJobs: protectedProcedure.query(async () => {
+    const jobs = await db.job_postings.selectAll();
+    return jobs;
+  }),
 });
