@@ -5,16 +5,23 @@ import { UserTable } from "./user.table";
 export class ProjectsTable extends BaseTable {
   readonly table = "projects";
   columns = this.setColumns((t) => ({
-    projectId: t.uuid().primaryKey().default(t.sql`gen_random_uuid()`),
+    projectId: t
+      .uuid()
+      .primaryKey()
+      .default(t.sql`gen_random_uuid()`),
     projectName: t.string().trim(),
     description: t.text(),
     targetAmount: t.decimal(),
     amountRaised: t.decimal().default(0),
     startDate: t.date(),
     endDate: t.date(),
-    projectDype: t.enum('project_type', ['Scholarship', 'Research', 'Infrastructure']),
-    createdBy: t.uuid().foreignKey(() => UserTable, 'id'),
-    alumniDonors: t.integer().default(0),
+    projectType: t.enum("project_type", [
+      "Scholarship",
+      "Research",
+      "Infrastructure",
+    ]),
+    createdBy: t.uuid().foreignKey(() => UserTable, "id"),
+    alumniDonors: t.array(t.uuid()),
   }));
 }
 

@@ -1,7 +1,6 @@
 import { Queryable, Selectable, Updatable } from "orchid-orm";
 import { BaseTable } from "./baseTable";
 import { UserTable } from "./user.table";
-import { Attendees, AttendeesTable } from "./attendees.table";
 
 export class EventsTable extends BaseTable {
   readonly table = "events";
@@ -19,9 +18,8 @@ export class EventsTable extends BaseTable {
     location: t.string().trim(),
     organizerId: t
       .uuid()
-      .foreignKey(() => UserTable, 'id') 
+      .foreignKey(() => UserTable, "id")
       .nullable(),
-    attendeesId: t.array(t.uuid().unique()),
   }));
 }
 

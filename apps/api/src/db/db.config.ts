@@ -8,6 +8,8 @@ import { JobPostingsTable } from "./tables/jobPosting.table";
 import { PaymentTransactionsTable } from "./tables/paymentTransactions.table";
 import { SuccessStoriesTable } from "./tables/successStories.table";
 import { JobApplicationTable } from "./tables/jobApplication.table";
+import { AttendeesTable } from "./tables/attendees.table";
+import { NetworkingHub } from "./tables/networkingHub.table";
 
 export const db = orchidORM(
   {
@@ -25,5 +27,7 @@ export const db = orchidORM(
     payment_transaction: PaymentTransactionsTable,
     success_stories: SuccessStoriesTable,
     job_application: JobApplicationTable,
+    attendees: AttendeesTable,
+    networking_hub: NetworkingHub,
   }
 );

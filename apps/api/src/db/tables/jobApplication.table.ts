@@ -18,7 +18,7 @@ export class JobApplicationTable extends BaseTable {
     applicationDate: t
         .timestamp(),
     status: t
-        .enum('status', ['Submitted', 'interview', 'Hired', 'Rejected']),
+        .enum('status', ['Submitted', 'Interview', 'Hired', 'Rejected']),
   }));
 }
 

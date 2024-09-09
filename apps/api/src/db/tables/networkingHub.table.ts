@@ -14,9 +14,11 @@ export class NetworkingHub extends BaseTable {
         alumniId2: t
             .uuid()
             .foreignKey(() => UserTable, 'id'),
+        statusFrom1: t
+            .enum('status_from', ['Sent', 'connected', 'Pending']),
+        statusFrom2: t
+            .enum('status_from', ['Sent', 'connected', 'Pending']),
         connectionType: t
             .enum('connection_type', ['Professional', 'Mentorship']),
-        status: t
-            .enum('status', ['Pending', 'Active']),
     }))
 } 
