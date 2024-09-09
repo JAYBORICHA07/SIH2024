@@ -17,6 +17,10 @@ export class JobApplicationTable extends BaseTable {
         .foreignKey(() => UserTable, 'id'),
     applicationDate: t
         .timestamp(),
+    resumeUrl: t
+        .string().trim(),
+    coverLetter: t
+        .text(),
     status: t
         .enum('status', ['Submitted', 'Interview', 'Hired', 'Rejected']),
   }));

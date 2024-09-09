@@ -10,12 +10,14 @@ import {
   Row,
   Col,
   Space,
+  message,
 } from "antd";
 import { SearchOutlined, UserOutlined } from "@ant-design/icons";
 import { useMediaQuery } from "react-responsive";
 import { trpcFetch } from "@/trpc/trpcFetch";
 const { Title, Text } = Typography;
 const { TabPane } = Tabs;
+import { useRouter } from "@/router/hooks";
 const { Meta } = Card;
 
 export type User = {
@@ -47,7 +49,9 @@ type Job = {
 export const NetworkingHome: React.FC = () => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [users, setUsers] = useState<User[]>([]);
+  const [user, setUser] = useState<User>();
   const [jobs, setJobs] = useState<Job[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     trpcFetch.getAllProfiles.query().then((data) => {
@@ -56,7 +60,18 @@ export const NetworkingHome: React.FC = () => {
     trpcFetch.getAllJobs.query().then((data) => {
       setJobs(data);
     });
+    trpcFetch.getProfile.query().then((data) => {
+      setUser(data);
+    });
   }, []);
+
+  const handleApplication = (jobId: string) => {
+    if (!user?.mobileNumber) {
+      message.error("Please complete your profile first!")
+    }else{
+      router.push(`/job/application/${jobId}`);
+    }
+  };
 
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto", padding: 24 }}>
@@ -148,7 +163,7 @@ export const NetworkingHome: React.FC = () => {
                     >
                       {jobs.description}
                     </Text>
-                    <Button type="primary">Apply Now</Button>
+                    <Button type="primary" onClick={() => handleApplication(jobs.jobId)}>Apply Now</Button>
                   </Card>
                 </Col>
               ))}

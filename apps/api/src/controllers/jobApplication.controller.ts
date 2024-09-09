@@ -4,10 +4,14 @@ import { db } from "../db/db.config";
 
 export const JobApplicationByJobInput = z.object({
     jobId: z.string().trim(),
+    resumeUrl: z.string().trim(),
+    coverLetter: z.string().trim(),
 })
 
 export const JobApplicationSingleInput = z.object({
-    applicationId: z.string().trim()
+    applicationId: z.string().trim(),
+    resumeUrl: z.string().trim(),
+    coverLetter: z.string().trim(),
 })
 
 export const jobApplicationController = router({
@@ -49,23 +53,27 @@ export const jobApplicationController = router({
                     jobId: input.jobId,
                     status: 'Submitted',
                     applicationDate: new Date(),
+                    resumeUrl: input.resumeUrl,
+                    coverLetter: input.coverLetter,
                 }
             );
             return jobApplication;
         }),
-    // updateJobApplication: protectedProcedure
-    //     .input(JobApplicationSingleInput)
-    //     .query(async ({ input, ctx }) => {
-    //         const jobApplication = await db.job_application
-    //             .where({
-    //                 applicationId: input.applicationId,
-    //             })
-    //             .update({
-    //                 status: 'VI4',
-    //             }
-    //         );
-    //         return jobApplication;
-    //     }),
+    // TODO: Required Implementation for Processing application or just status updation by admin
+    updateJobApplication: protectedProcedure
+        .input(JobApplicationSingleInput)
+        .query(async ({ input, ctx }) => {
+            const jobApplication = await db.job_application
+                .where({
+                    applicationId: input.applicationId,
+                })
+                .update({
+                    resumeUrl: input.resumeUrl,
+                    coverLetter: input.coverLetter,
+                }
+            );
+            return jobApplication;
+        }),
     deleteJobApplication: protectedProcedure
         .input(JobApplicationSingleInput)
         .query(async ({ input, ctx }) => {
