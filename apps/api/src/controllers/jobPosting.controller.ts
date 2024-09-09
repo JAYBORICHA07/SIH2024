@@ -90,4 +90,9 @@ export const jobPostingController = router({
                 .delete()
             return jobPosting;
         }),
+
+    getAllJobs: protectedProcedure.query(async () => {
+        const jobs = await db.job_postings.selectAll();
+        return jobs;
+    }),
 })
