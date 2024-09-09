@@ -116,6 +116,65 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
     ],
   },
   {
+    path: "/success-stories",
+    element: <PageWrapper component={<DashboardLayout />} />,
+    errorElement: <ErrorPage />,
+    showInNav: true,
+    children: [
+      {
+        caseSensitive: false,
+        index: true,
+        path: "/success-stories/add",
+        lazy: async () => {
+          const { AddSuccessStory } = await import(
+            "../pages/SuccessStories/addSuccessStory.Page"
+          );
+          return { element: <PageWrapper component={<AddSuccessStory />} /> };
+        },
+        icon: "ph:chart-pie-slice-duotone",
+        navPath: "/success-stories/add",
+        navLabel: "Add Success Story",
+        title: "Add Success Story",
+        subheader: "Add Success Story",
+        showInNav: true,
+      },
+      {
+        caseSensitive: false,
+        index: true,
+        path: "/success-stories/view",
+        lazy: async () => {
+          const { FullSuccessStory } = await import(
+            "../pages/SuccessStories/FullSuccessStory.Page"
+          );
+          return { element: <PageWrapper component={<FullSuccessStory />} /> };
+        },
+        icon: "ph:chart-pie-slice-duotone",
+        navPath: "/success-stories/view",
+        navLabel: "View Success Story",
+        title: "View Success Story",
+        subheader: "View Success Story",
+        showInNav: true,
+      },
+      {
+        caseSensitive: false,
+        index: true,
+        path: "/success-stories/all",
+        lazy: async () => {
+          const { SuccessStories } = await import(
+            "../pages/SuccessStories/successStoryList.Page"
+          );
+          return { element: <PageWrapper component={<SuccessStories />} /> };
+        },
+        icon: "ph:chart-pie-slice-duotone",
+        navPath: "/success-stories/all",
+        navLabel: "View all Success Story",
+        title: "View all Success Story",
+        subheader: "View all Success Story",
+        showInNav: true,
+      },
+    ],
+  },
+  {
     path: "/networking",
     element: <PageWrapper component={<DashboardLayout />} />,
     errorElement: <ErrorPage />,
