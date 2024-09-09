@@ -24,7 +24,6 @@ type Event = {
   description: string;
   location: string;
   organizerId?: string | null;
-  attendeesId: string[];
 };
 
 const attendees = [
