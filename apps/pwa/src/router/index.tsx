@@ -163,6 +163,23 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
         subheader: "/job/create",
         showInNav: true,
       },
+      {
+        caseSensitive: false,
+        index: true,
+        path: "/jobs/application",
+        lazy: async () => {
+          const { JobApplicationPage } = await import(
+            "../pages/Job/JobApplicationPage"
+          );
+          return { element: <PageWrapper component={< JobApplicationPage />} /> };
+        },
+        icon: "ph:chart-pie-slice-duotone",
+        navPath: "/jobs/application",
+        navLabel: "Job Application",
+        title: "Job Application",
+        subheader: "/job/application",
+        showInNav: true,
+      },
     ],
   },
   {
