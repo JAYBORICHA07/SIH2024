@@ -13,8 +13,7 @@ export const NetworkingHubForAlumniInput = z.object({
 })
 
 export const NetworkCreateInput = z.object({
-    alumniId1: z.string().trim(),
-    alumniId2: z.string().trim(),  
+    alumniId: z.string().trim(),
 })
 
 export const NetworkingHubUpdateConnectedInput = NetworkCreateInput
@@ -46,11 +45,11 @@ export const networkingHubController = router({
     createNetworkingHub: protectedProcedure
         .input(NetworkCreateInput)
         .query(async ({ input, ctx }) => {
-            const fromAlumni = ctx.user?.user.id! === input.alumniId1 ? 'Sent' : 'Pending';
+            const fromAlumni = ctx.user?.user.id! === input.alumniId ? 'Sent' : 'Pending';
             const networkingHub = await db.networking_hub
                 .create({
-                    alumniId1: input.alumniId1,
-                    alumniId2: input.alumniId2,
+                    alumniId1: input.alumniId,
+                    alumniId2: ctx.user?.user.id!,
                     statusFrom1: fromAlumni,
                     statusFrom2: fromAlumni === 'Sent' ? 'Pending' : 'Sent',
                     connectionType: 'Professional'
