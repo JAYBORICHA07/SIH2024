@@ -11,15 +11,15 @@ const port = Number(process.env.PORT) || 3000;
 // TODO: Figure out how to get secure-session https://www.npmjs.com/package/@fastify/secure-session
 server
   .register(fastifyCors, {
-    origin: [env.FRONTEND_URL as string],
-    methods: ["POST", "GET", "DELETE", "PUT"],
+    origin: [env.FRONTEND_URL as string, "*"],
+    methods: ["POST", "GET", "DELETE", "PUT", "PATCH", "*"],
     credentials: true,
   })
   .register(helmet)
   .register(sensible);
 
 // Run the server!
-server.listen({ port: port, host: "0.0.0.0" }, function (err, address) {
+server.listen({ port: port }, function (err, address) {
   if (err) {
     server.log.error(err);
     process.exit(1);
