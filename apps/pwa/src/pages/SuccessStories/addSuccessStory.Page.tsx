@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Card, Form, Input, message, Flex, Typography } from "antd";
 import { FileTextOutlined } from "@ant-design/icons";
+import { trpcFetch } from "@/trpc/trpcFetch";
 import { useRouter } from "@/router/hooks";
 
 const { TextArea } = Input;
@@ -17,16 +18,11 @@ export const AddSuccessStory: React.FC = () => {
 
   const onFinish = async (values: SuccessStory) => {
     try {
-
-      const newStory = {
-        storyId: "id",
-        ...values,
-      };
-
-      const createdStory = newStory;
-      console.info(createdStory);
+      const newSuccessStory = await trpcFetch.createSucessStory.query(values)
+      
+      console.info(newSuccessStory);
       message.success("Success story submitted successfully");
-      router.push(`/success-stories/${createdStory.storyId}`);
+      router.push(`/success-stories/view/${newSuccessStory.storyId}`);
     } catch (error) {
       console.error("Error submitting success story:", error);
       message.error("Failed to submit success story");

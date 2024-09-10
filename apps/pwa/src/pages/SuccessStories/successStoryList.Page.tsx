@@ -12,6 +12,7 @@ import {
 } from "antd";
 import { UserOutlined, SearchOutlined } from "@ant-design/icons";
 import { useRouter } from "@/router/hooks";
+import { trpcFetch } from "@/trpc/trpcFetch";
 
 const { Title, Text, Paragraph } = Typography;
 const { Option } = Select;
@@ -48,6 +49,10 @@ export const SuccessStories: React.FC = () => {
   const router = useRouter();
 
   useEffect(() => {
+    trpcFetch.getAllSuccessStories.query().then((data) => {
+      console.info(data);
+      setStories(data);
+    });
     setStories(mockSuccessStories);
   }, []);
 
@@ -66,7 +71,7 @@ export const SuccessStories: React.FC = () => {
     });
 
   const handleReadFullStory = (storyId: string) => {
-    router.push(`/success-stories/${storyId}`);
+    router.push(`/success-stories/view/${storyId}`);
   };
 
   return (
@@ -104,6 +109,9 @@ export const SuccessStories: React.FC = () => {
                 <Button
                   key="read"
                   onClick={() => handleReadFullStory(story.storyId)}
+                  type="primary"
+                  size="large"
+                  className="w-[80%]"
                 >
                   Read Full Story
                 </Button>,
@@ -120,7 +128,7 @@ export const SuccessStories: React.FC = () => {
                 title={story.storyTitle}
                 description={
                   <Space direction="vertical" size={0}>
-                    <Text type="secondary">Alumni {story.alumniId}</Text>
+                    <Text type="secondary">Alumni {story.alumniId.slice(0,4)}</Text>
                     <Text type="secondary">
                       Posted on {new Date(story.postedAt).toLocaleDateString()}
                     </Text>

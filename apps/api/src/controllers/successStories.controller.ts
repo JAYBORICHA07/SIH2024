@@ -19,15 +19,15 @@ export const SuccessStoryUpdateInput = z.object({
 
 export const successStoriesController = router({
     getSuccessStories: protectedProcedure
-        .query(async ({ input, ctx }) => {
+        .query(async () => {
             const successStories = await db.success_stories
-                .select()
+                .select('alumniId','storyContent','storyTitle','postedAt','storyId')
             return successStories;
         }),
 
     getSuccessStory: protectedProcedure
         .input(SuccessStorySingleInput)
-        .query(async ({ input, ctx }) => {
+        .query(async ({ input }) => {
             const successStory = await db.success_stories
                 .where({
                     storyId: input.storyId,
@@ -48,7 +48,7 @@ export const successStoriesController = router({
         }),
     updateSuccessStory: protectedProcedure
         .input(SuccessStoryUpdateInput)
-        .query(async ({ input, ctx }) => {
+        .query(async ({ input }) => {
             const successStory = await db.success_stories
                 .where({
                     storyId: input.storyId,
@@ -61,7 +61,7 @@ export const successStoriesController = router({
         }),
     deleteSuccessStory: protectedProcedure
         .input(SuccessStorySingleInput)
-        .query(async ({ input, ctx }) => {
+        .query(async ({ input }) => {
             const successStory = await db.success_stories
                 .where({
                     storyId: input.storyId,
