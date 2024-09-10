@@ -26,6 +26,8 @@ export interface ConnectionUser extends User{
 export const SearchConnection: React.FC = () => {
     const isMobile = useMediaQuery({ maxWidth: 767 });
     const [users, setUsers] = useState<ConnectionUser[]>();
+    const [searchString, setSearchString] = useState('');
+    const [filteredUsers, setFilteredUsers] = useState<ConnectionUser[]>(users ?? []);
 
     useEffect(() => {
         trpcFetch.getAllProfiles.query().then((data) => {
@@ -36,6 +38,7 @@ export const SearchConnection: React.FC = () => {
                 }
             });
             setUsers(useData);
+            setFilteredUsers(useData);
         });
     }, []);
 
@@ -56,6 +59,18 @@ export const SearchConnection: React.FC = () => {
                 console.error(err);
             });
     }
+   
+    const handleSearch = () => {
+        const lowercasedSearchString = searchString.toLowerCase();
+        const filtered = users?.filter(user => {
+            if(searchString === "") return true;
+            return Object.values(user).some(value =>
+                value?.toString().toLowerCase().includes(lowercasedSearchString)
+            );
+        });
+        setFilteredUsers(filtered ?? []);
+    };
+
 
     return (
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: 24 }}>
@@ -76,6 +91,8 @@ export const SearchConnection: React.FC = () => {
                     prefix={<SearchOutlined />}
                     placeholder="Search alumni..."
                     style={{ width: isMobile ? "100%" : 240 }}
+                    onChange={e => setSearchString(e.target.value)}
+                    onPressEnter={handleSearch}
                 />
                 <Select
                     mode="multiple"
@@ -93,7 +110,7 @@ export const SearchConnection: React.FC = () => {
             <Tabs defaultActiveKey="connections">
                 <TabPane tab="Connections" key="connections" >
                     <Row gutter={[16, 16]}>
-                        {users?.map((user) => (
+                        {filteredUsers?.map((user) => (
                             <Col xs={24} sm={12} lg={8} key={user.id} >
                                 <Card
                                     style={
