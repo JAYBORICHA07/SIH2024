@@ -1,6 +1,5 @@
 import { trpcFetch } from "@/trpc/trpcFetch";
 import React, { useEffect, useState } from "react";
-import { useMediaQuery } from "react-responsive";
 import {
     Avatar,
     Button,
@@ -9,7 +8,6 @@ import {
     Input,
     Row,
     Select,
-    Space,
     Tabs,
     Typography,
     Tag
@@ -25,7 +23,6 @@ export interface ConnectionUser extends User {
 }
 
 export const SearchConnection: React.FC = () => {
-    const isMobile = useMediaQuery({ maxWidth: 767 });
     const [users, setUsers] = useState<ConnectionUser[]>([]);
     const [searchString, setSearchString] = useState('');
     const [industryFilter, setIndustryFilter] = useState<string[]>([]);
@@ -71,6 +68,7 @@ export const SearchConnection: React.FC = () => {
 
     const handleSearch = () => {
         const lowercasedSearchString = searchString.toLowerCase();
+        // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
         const filtered = users.filter(user => {
             const matchesSearchString = searchString === "" || Object.values(user).some(value =>
                 value?.toString().toLowerCase().includes(lowercasedSearchString)

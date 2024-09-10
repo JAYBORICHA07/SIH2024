@@ -16,7 +16,7 @@ export const JobApplicationSingleInput = z.object({
 
 export const jobApplicationController = router({
     getJobApplicationsForUser: protectedProcedure
-        .query(async ({ input, ctx }) => {
+        .query(async ({ ctx }) => {
             const jobApplications = await db.job_application
                 .where({
                     alumniId: ctx.user?.user.id,
@@ -26,7 +26,7 @@ export const jobApplicationController = router({
         }),
     getJobApplicationForJob: protectedProcedure
         .input(JobApplicationByJobInput)
-        .query(async ({ input, ctx }) => {
+        .query(async ({ input}) => {
             const jobApplications = await db.job_application
                 .where({
                     jobId: input.jobId
@@ -37,7 +37,7 @@ export const jobApplicationController = router({
     ,
     getJobApplication: protectedProcedure
         .input(JobApplicationSingleInput)
-        .query(async ({ input, ctx }) => {
+        .query(async ({ input }) => {
             const jobApplication = await db.job_application
                 .where({
                     applicationId: input.applicationId,
@@ -62,7 +62,7 @@ export const jobApplicationController = router({
     // TODO: Required Implementation for Processing application or just status updation by admin
     updateJobApplication: protectedProcedure
         .input(JobApplicationSingleInput)
-        .query(async ({ input, ctx }) => {
+        .query(async ({ input }) => {
             const jobApplication = await db.job_application
                 .where({
                     applicationId: input.applicationId,
@@ -76,7 +76,7 @@ export const jobApplicationController = router({
         }),
     deleteJobApplication: protectedProcedure
         .input(JobApplicationSingleInput)
-        .query(async ({ input, ctx }) => {
+        .query(async ({ input }) => {
             const jobApplication = await db.job_application
                 .where({
                     applicationId: input.applicationId,

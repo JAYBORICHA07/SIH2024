@@ -28,7 +28,7 @@ export const JobPostingSingleInput = z.object({
 
 export const jobPostingController = router({
     getJobPostingsForUser: protectedProcedure
-        .query(async ({ input, ctx }) => {
+        .query(async ({ ctx }) => {
             const jobPostings = await db.job_postings
                 .where({
                     postedBy: ctx.user?.user.id,
@@ -38,7 +38,7 @@ export const jobPostingController = router({
         }),
     getJobPosting: protectedProcedure
         .input(JobPostingSingleInput)
-        .query(async ({ input, ctx }) => {
+        .query(async ({ input }) => {
             const jobPosting = await db.job_postings
                 .where({
                     jobId: input.jobId,
@@ -64,7 +64,7 @@ export const jobPostingController = router({
         }),
     updateJobPosting: protectedProcedure
         .input(JobPostingUpdateInput)
-        .query(async ({ input, ctx }) => {
+        .query(async ({ input }) => {
             const jobPosting = await db.job_postings
                 .where({
                     jobId: input.jobId,
@@ -82,7 +82,7 @@ export const jobPostingController = router({
         }),
     deleteJobPosting: protectedProcedure
         .input(JobPostingSingleInput)
-        .query(async ({ input, ctx }) => {
+        .query(async ({ input }) => {
             const jobPosting = await db.job_postings
                 .where({
                     jobId: input.jobId,

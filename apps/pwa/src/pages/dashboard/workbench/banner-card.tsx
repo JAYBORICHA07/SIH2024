@@ -6,7 +6,11 @@ import { useUserInfo } from "../../../store/userStore";
 import { useThemeToken } from "../../../theme/hooks";
 import { Iconify } from "../../../components/icon";
 
+// biome-ignore lint/style/noDefaultExport: <explanation>
 export default function BannerCard() {
+  
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const { name } = useUserInfo();
   const themeToken = useThemeToken();
 

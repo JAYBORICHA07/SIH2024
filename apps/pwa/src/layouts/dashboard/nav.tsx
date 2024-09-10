@@ -1,11 +1,9 @@
 import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 import { Menu, MenuProps } from "antd";
 import Color from "color";
-import { m } from "framer-motion";
 import { CSSProperties, useEffect, useState } from "react";
 import { useLocation, useMatches, useNavigate } from "react-router-dom";
 import { NAV_COLLAPSED_WIDTH, NAV_WIDTH } from "./config";
-import { varSlide } from "../../components/animate/variants";
 import { useThemeToken } from "../../theme/hooks";
 import { useSettingActions, useSettings } from "../../store/settingStore";
 import { useRouteToMenuFn } from "../../router/hooks";
@@ -14,9 +12,6 @@ import { ThemeLayout } from "../../types/enum";
 import MotionContainer from "../../components/animate/motion-container";
 import { Logo } from "../../components/Logo/Logo";
 import Scrollbar from "../../components/scrollbar";
-import { APP_NAME } from "@/appConfig";
-
-const slideInLeft = varSlide({ distance: 10 }).inLeft;
 
 type Props = {
   closeSideBarDrawer?: () => void;
@@ -28,7 +23,7 @@ export default function Nav(props: Props) {
   const matches = useMatches();
   const { pathname } = useLocation();
 
-  const { colorPrimary, colorTextBase, colorBgElevated, colorBorder } =
+  const { colorTextBase, colorBgElevated, colorBorder } =
     useThemeToken();
 
   const settings = useSettings();

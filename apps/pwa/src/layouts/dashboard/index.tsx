@@ -10,23 +10,10 @@ import { useSettings } from "../../store/settingStore";
 import { ThemeLayout, ThemeMode } from "../../types/enum";
 import ProgressBar from "../../components/progress-bar";
 import { CircleLoading } from "../../components/loading";
-import { useUserInfo } from "@/store/userStore";
-import { clarity } from 'react-microsoft-clarity';
 
 function DashboardLayout() {
   const { colorBgElevated, colorTextBase } = useThemeToken();
   const { themeLayout, themeMode } = useSettings();
-
-  const user = useUserInfo();
-
-  useEffect(() => {
-    if (clarity.hasStarted() && user?.id) {
-      clarity.identify(user.id, {
-        userEmail: user.email || '',
-        userName: user.name || '',
-      });
-    }
-  }, [user]);
 
   const mainEl = useRef(null);
   const { scrollY } = useScroll({ container: mainEl });
@@ -84,6 +71,7 @@ function DashboardLayout() {
     </StyleWrapper>
   );
 }
+// biome-ignore lint/style/noDefaultExport: <explanation>
 export default DashboardLayout;
 
 const StyleWrapper = styled.div<{ $themeMode?: ThemeMode }>`

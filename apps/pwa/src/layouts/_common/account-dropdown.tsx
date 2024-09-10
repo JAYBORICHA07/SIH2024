@@ -10,7 +10,6 @@ import { trpc } from "@/trpc/trpc";
 import { useRouter } from "@/router/hooks";
 import { UserOutlined } from "@ant-design/icons";
 
-const { VITE_APP_HOMEPAGE: HOMEPAGE } = import.meta.env;
 
 // biome-ignore lint/style/noDefaultExport: <explanation>
 export default function AccountDropdown() {

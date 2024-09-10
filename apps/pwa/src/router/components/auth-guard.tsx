@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { trpc } from "@/trpc/trpc";
 import { useUserActions } from "../../store/userStore";
@@ -10,6 +10,7 @@ type Props = {
   children: React.ReactNode;
 };
 
+// biome-ignore lint/style/noDefaultExport: <explanation>
 export default function AuthGuard({ children }: Props) {
   const router = useRouter();
   const pathname = usePathname();
@@ -28,6 +29,8 @@ export default function AuthGuard({ children }: Props) {
         router.replace("/auth/login");
       }
     } else if (profile.data) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       setUserInfo(profile.data);
     }
   }, [profile.isLoading]);

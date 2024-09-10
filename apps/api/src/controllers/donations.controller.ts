@@ -1,7 +1,6 @@
 import z from "zod";
 import { protectedProcedure, router } from "../context.trpc";
 import { db } from "../db/db.config";
-import { ProjectsTable } from "../db/tables/project.table";
 
 export const DonationSingleInput = z.object({
     donationId: z.string().trim(),
@@ -26,7 +25,7 @@ export const DonationUpdateInput = z.object({
 
 export const donationsController = router({
     getDonationsForUser: protectedProcedure
-        .query(async ({ input, ctx }) => {
+        .query(async ({  ctx }) => {
             const donations = await db.donations
                 .where({
                     donator: ctx.user?.user.id,
@@ -36,7 +35,7 @@ export const donationsController = router({
         }),
     getDonation: protectedProcedure
         .input(DonationSingleInput)
-        .query(async ({ input, ctx }) => {
+        .query(async ({ input }) => {
             const donation = await db.donations
                 .where({
                     donationId: input.donationId,
@@ -111,7 +110,7 @@ export const donationsController = router({
         }),
     deleteDonation: protectedProcedure
         .input(DonationSingleInput)
-        .query(async ({ input, ctx }) => {
+        .query(async ({ input }) => {
             const donation = await db.donations
                 .where({
                     donationId: input.donationId,
