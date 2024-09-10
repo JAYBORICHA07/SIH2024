@@ -3,7 +3,8 @@ import { defineConfig } from "vite";
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import reactSWC from "@vitejs/plugin-react-swc";
 import tsconfigPaths from "vite-tsconfig-paths";
-import { RegisterSWData, VitePWA, VitePWAOptions } from "vite-plugin-pwa";
+import {  VitePWA, VitePWAOptions } from "vite-plugin-pwa";
+// import { RegisterSWData, VitePWA, VitePWAOptions } from "vite-plugin-pwa";
 
 const manifestForPlugIn:Partial<VitePWAOptions> = {
   devOptions: {
@@ -22,16 +23,16 @@ const manifestForPlugIn:Partial<VitePWAOptions> = {
       {
         urlPattern: /\.(?:woff|woff2)$/,
         handler: 'CacheFirst',
-        options: {
-          cacheName: 'fonts',
-          expiration: {
-            maxEntries: 30,
-            maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
-          },
-          cacheableResponse: {
-            statuses: [0, 200]
-          }
-        }
+        // options: {
+        //   cacheName: 'fonts',
+        //   expiration: {
+        //     maxEntries: 30,
+        //     maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
+        //   },
+        //   cacheableResponse: {
+        //     statuses: [0, 200]
+        //   }
+        // }
       },
       {
         urlPattern: /\.(?:png|gif|jpg|jpeg|svg)$/,
@@ -103,15 +104,16 @@ const manifestForPlugIn:Partial<VitePWAOptions> = {
   }
 };
 
-const replaceOptions = {
-  __DATE__: new Date().toISOString(),
-  preventAssignment: true,
-};
+// const replaceOptions = {
+//   __DATE__: new Date().toISOString(),
+//   preventAssignment: true,
+// };
 
-const claims = process.env.CLAIMS === "true";
-const reload = process.env.RELOAD_SW === "true";
-const selfDestroying = process.env.SW_DESTROY === "true";
+// const claims = process.env.CLAIMS === "true";
+// const reload = process.env.RELOAD_SW === "true";
+// const selfDestroying = process.env.SW_DESTROY === "true";
 
+// biome-ignore lint/style/noDefaultExport: <explanation>
 export default defineConfig({
 
   base: "/",
