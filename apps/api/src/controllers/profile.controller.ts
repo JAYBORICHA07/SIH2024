@@ -38,8 +38,7 @@ export const profileController = router({
           currRole: input.currRole,
           collegeId: input.collegeId,
         });
-      console.info(profile);
-      //   return profile;
+        return profile;
     }),
   getProfile: protectedProcedure.query(async ({ ctx }) => {
     const profile = await db.user.where({
