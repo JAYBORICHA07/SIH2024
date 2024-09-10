@@ -14,6 +14,7 @@ const manifestForPlugIn:Partial<VitePWAOptions> = {
   },
   registerType: 'prompt',
   workbox: {
+    maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5 MiB
     globPatterns: ["**/*.{js,jsx,css,html,ico,png,svg,ts,tsx}"],
     runtimeCaching: [
       {
