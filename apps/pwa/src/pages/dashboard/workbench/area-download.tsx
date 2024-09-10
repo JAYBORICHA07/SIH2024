@@ -8,19 +8,19 @@ export default function AreaDownload() {
   const [year, setYear] = useState("2023");
   const series: Record<string, ApexAxisChartSeries> = {
     "2022": [
-      { name: "China", data: [10, 41, 35, 51, 49, 61, 69, 91, 148, 35, 51] },
-      { name: "America", data: [10, 34, 13, 56, 77, 88, 99, 45, 13, 56, 77] },
+      { name: "funds", data: [10, 41, 35, 51, 49, 61, 69, 91, 148, 35, 51] },
+      { name: "facility", data: [10, 34, 13, 56, 77, 88, 99, 45, 13, 56, 77] },
     ],
 
     "2023": [
-      { name: "China", data: [51, 35, 41, 10, 91, 69, 62, 148, 91, 35, 51] },
-      { name: "America", data: [56, 13, 34, 10, 77, 99, 88, 45, 13, 56, 77] },
+      { name: "funds", data: [51, 35, 41, 10, 91, 69, 62, 148, 91, 35, 51] },
+      { name: "facility", data: [56, 13, 34, 10, 77, 99, 88, 45, 13, 56, 77] },
     ],
   };
   return (
     <Card className="flex-col">
       <header className="flex w-full justify-between self-start">
-        <Typography.Title level={5}>Area Installed</Typography.Title>
+        <Typography.Title level={5}>Activity Chart</Typography.Title>
         <Select
           size="small"
           defaultValue={year}

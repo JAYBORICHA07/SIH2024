@@ -26,7 +26,7 @@ export const AuthSuccess: React.FC = () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       setUserInfo(userSession.data);
-      router.replace("/");
+      router.replace("/feed/home");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router, userSession.isLoading]);

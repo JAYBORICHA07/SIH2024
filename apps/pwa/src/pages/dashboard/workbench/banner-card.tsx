@@ -11,7 +11,7 @@ export default function BannerCard() {
   
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const { name } = useUserInfo();
+  const { user } = useUserInfo();
   const themeToken = useThemeToken();
 
   const bg = `linear-gradient(135deg, ${Color(themeToken.colorPrimaryHover).alpha(0.2)}, ${Color(
@@ -36,9 +36,9 @@ export default function BannerCard() {
           style={{ color: themeToken.colorPrimaryActive }}
         >
           <h4>Welcome back 👋 </h4>
-          <h4>{name}</h4>
+          <h4>{user?.name}</h4>
         </div>
-        <div
+        {/* <div
           style={{ color: themeToken.colorPrimaryTextActive }}
           className="mx-auto mb-6 mt-4 max-w-sm text-sm opacity-80 md:mx-0"
         >
@@ -51,7 +51,7 @@ export default function BannerCard() {
         >
           <Iconify icon="mdi:whatsapp" size={24} />
           <span className="ml-2 font-black">Join Whatsapp</span>
-        </button>
+        </button> */}
       </Col>
 
       <Col

@@ -7,7 +7,7 @@ export default function CurrentDownload() {
   return (
     <Card className="flex-col">
       <header className="self-start">
-        <Typography.Title level={5}>Current Download</Typography.Title>
+        <Typography.Title level={5}>Current Donations</Typography.Title>
       </header>
       <main>
         <ChartDonut />
@@ -19,7 +19,7 @@ export default function CurrentDownload() {
 const series = [44, 55, 13, 43];
 function ChartDonut() {
   const chartOptions = useChart({
-    labels: ["Mac", "Window", "IOS", "Android"],
+    labels: ["2020", "2021", "2022", "2023"],
     stroke: {
       show: false,
     },

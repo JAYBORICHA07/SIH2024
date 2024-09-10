@@ -122,7 +122,7 @@ export const SearchConnection: React.FC = () => {
                         maxTagCount={"responsive"}
                         size="large"
                         style={{ flex: '1 1 240px' }}
-                        placeholder="Filter by college"
+                        placeholder="Filter by Id"
                         onChange={setCollegeFilter}
                     >
                         {getUniqueValues("collegeId").map(value => (

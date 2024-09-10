@@ -52,7 +52,7 @@ export function Workbench() {
 
         <Col span={24} md={8}>
           <TotalCard
-            title="Total Downloads"
+            title="Total Donations"
             increase={false}
             count="678"
             percent="0.1%"
@@ -70,7 +70,7 @@ export function Workbench() {
         </Col>
       </Row>
 
-      <Row gutter={[16, 16]} className="mt-4" justify="center">
+      {/* <Row gutter={[16, 16]} className="mt-4" justify="center">
         <Col span={24} md={12} lg={16}>
           <NewInvoice />
         </Col>
@@ -87,7 +87,7 @@ export function Workbench() {
         <Col span={24} md={12}>
           <TopAuthor />
         </Col>
-      </Row>
+      </Row> */}
     </div>
   );
 }

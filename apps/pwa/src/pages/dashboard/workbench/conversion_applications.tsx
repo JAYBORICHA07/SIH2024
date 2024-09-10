@@ -8,7 +8,7 @@ export function Conversion() {
     <Basic
       percent={48}
       title="38,566"
-      subtitle="Conversion"
+      subtitle="Total Application"
       iconify="tabler:user-filled"
       bg={colorPrimaryActive}
       strokeColor={colorPrimaryBorder}
