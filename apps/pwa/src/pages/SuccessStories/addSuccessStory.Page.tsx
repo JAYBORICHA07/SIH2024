@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Card, Form, Input, message, Flex, Typography } from "antd";
-import { UserOutlined, FileTextOutlined } from "@ant-design/icons";
+import { FileTextOutlined } from "@ant-design/icons";
 import { useRouter } from "@/router/hooks";
 
 const { TextArea } = Input;
@@ -39,20 +39,6 @@ export const AddSuccessStory: React.FC = () => {
         <Typography.Title level={2}>Share Your Success Story</Typography.Title>
         <Form form={form} layout="vertical" onFinish={onFinish}>
           <Flex vertical gap={"small"} className="px-4 py-4">
-            <Flex vertical gap={4} wrap="wrap">
-              <Form.Item
-                name="alumniId"
-                rules={[
-                  { required: true, message: "Please input your Alumni ID!" },
-                ]}
-              >
-                <Input
-                  size="large"
-                  prefix={<UserOutlined />}
-                  placeholder="Alumni ID"
-                />
-              </Form.Item>
-            </Flex>
 
             <Flex vertical gap={4} wrap="wrap">
               <Form.Item
