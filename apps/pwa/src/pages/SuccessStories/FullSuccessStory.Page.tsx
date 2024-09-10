@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Typography, Space, Spin } from "antd";
-import { useRouter } from "@/router/hooks";
+import { useParams, useRouter } from "@/router/hooks";
 import Card from "@/components/card";
+import { trpcFetch } from "@/trpc/trpcFetch";
+import { useUserInfo } from "@/store/userStore";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -15,19 +17,16 @@ type SuccessStory = {
 };
 
 export const FullSuccessStory: React.FC = () => {
+  const {user} = useUserInfo()
   const [story, setStory] = useState<SuccessStory | null>(null);
   const router = useRouter();
-  const storyId = "1";
+  const {storyId} = useParams()
   useEffect(() => {
-    const mockStory: SuccessStory = {
-      storyId: storyId,
-      alumniId: "A001",
-      storyTitle: "From Classroom to CEO",
-      storyContent:
-        "After graduating from our esteemed university, I embarked on an entrepreneurial journey that led me to found a groundbreaking tech startup. The skills and knowledge I gained during my time at the university were instrumental in navigating the challenges of the business world. Our company has now grown to employ over 500 people and has made significant contributions to the field of artificial intelligence. I am grateful for the foundation that my alma mater provided, which has been crucial to my success.",
-      postedAt: "2023-06-15T10:30:00Z",
-    };
-    setStory(mockStory);
+     storyId && trpcFetch.getSuccessStoryById.query({storyId : storyId ?? ""}).then((data) => {
+      console.info(data);
+      setStory({...data, alumniId : user?.name ?? data.alumniId});
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storyId]);
 
   if (!story) {
@@ -68,7 +67,7 @@ export const FullSuccessStory: React.FC = () => {
           <Paragraph style={{ textAlign: "justify" }}>
             {story.storyContent}
           </Paragraph>
-          <Button block type="primary" onClick={() => router.back()}>
+          <Button block type="primary" onClick={() => router.push("/success-stories/all")}>
             Back to All Stories
           </Button>
         </Space>

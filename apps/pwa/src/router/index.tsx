@@ -141,7 +141,7 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
       {
         caseSensitive: false,
         index: true,
-        path: "/success-stories/view",
+        path: "/success-stories/view/:storyId",
         lazy: async () => {
           const { FullSuccessStory } = await import(
             "../pages/SuccessStories/FullSuccessStory.Page"
@@ -153,7 +153,7 @@ export const RouteObjectWithNavbar: RouteObjectWithNavbar[] = [
         navLabel: "View Success Story",
         title: "View Success Story",
         subheader: "View Success Story",
-        showInNav: true,
+        showInNav: false,
       },
       {
         caseSensitive: false,

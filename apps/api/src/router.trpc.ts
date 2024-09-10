@@ -35,6 +35,9 @@ export const trpcRouter = router({
   getEventById: eventController.getEventById,
   getAllJobs: jobController.getAllJobs,
   createJob: jobController.createJob,
+  createSucessStory: successStoriesController.createSuccessStory,
+  getSuccessStoryById : successStoriesController.getSuccessStory,
+  getAllSuccessStories: successStoriesController.getSuccessStories
 });
 
 export type ApiRouter = typeof trpcRouter;
