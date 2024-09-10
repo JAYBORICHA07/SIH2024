@@ -1,7 +1,6 @@
 import z from "zod";
 import { protectedProcedure, router } from "../context.trpc";
 import { db } from "../db/db.config";
-import { start } from "repl";
 
 export const ProjectSingleInput = z.object({
     projectId: z.string().trim(),
@@ -31,14 +30,14 @@ export const ProjectUpdateInput = z.object({
 
 export const projectController = router({
     getProjects: protectedProcedure
-        .query(async ({ input, ctx }) => {
+        .query(async ({  }) => {
             const projects = await db.projects
                 .select()
             return projects;
         }),
     getProject: protectedProcedure
         .input(ProjectSingleInput)
-        .query(async ({ input, ctx }) => {
+        .query(async ({ input }) => {
             const project = await db.projects
                 .where({
                     projectId: input.projectId,
@@ -83,7 +82,7 @@ export const projectController = router({
         }),
     deleteProject: protectedProcedure
         .input(ProjectSingleInput)
-        .query(async ({ input, ctx }) => {
+        .query(async ({ input }) => {
             const project = await db.projects
                 .where({
                     projectId: input.projectId,

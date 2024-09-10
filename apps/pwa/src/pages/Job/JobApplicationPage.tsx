@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Typography, Form, Input, Radio, Button, message } from "antd";
+import { Card, Typography, Form, Input, Button, message } from "antd";
 import { trpcFetch } from "@/trpc/trpcFetch";
 import { useRouter } from "@/router/hooks";
 const { Title, Paragraph } = Typography;
@@ -26,7 +26,7 @@ interface CreatedApplication {
     jobId:string;
     resumeUrl: string;
     coverLetter: string;
-};
+}
 
 interface ApplicationData {
     resume: string;
@@ -41,13 +41,6 @@ export const JobApplicationPage: React.FC = () => {
 
     const onFinish = async (values: ApplicationData) => {
         try {
-            // Simulating API call to create event
-            const response = await new Promise<{ id: string }>((resolve) =>
-                setTimeout(
-                    () => resolve({ id: Math.random().toString(36).substr(2, 9) }),
-                    1000
-                )
-            );
 
             const newApplication: CreatedApplication = {
                 jobId: jobId!,
@@ -74,11 +67,6 @@ export const JobApplicationPage: React.FC = () => {
     }, []);
 
 
-    // const handleSubmit = async (values: ApplicationData) => {
-    //     console.info("Submitting registration:", values);
-    //     message.success("Applied Successfully");
-    // };
-
     return (
         <div style={{ maxWidth: 800, margin: "0 auto", padding: 24 }}>
             <Card>
@@ -98,14 +86,14 @@ export const JobApplicationPage: React.FC = () => {
                         name="email"
                         label="Email"
                     >
-                        <Input disabled placeholder={user?.email!} size="large" />
+                        <Input disabled placeholder={user?.email ?? ""} size="large" />
                     </Form.Item>
 
                     <Form.Item
                         name="phone"
                         label="Phone Number"
                     >
-                        <Input placeholder={user?.mobileNumber!} disabled size="large" />
+                        <Input placeholder={user?.mobileNumber ?? ""} disabled size="large" />
                     </Form.Item>
 
                     <Form.Item

@@ -1,7 +1,6 @@
 import z from "zod";
 import { protectedProcedure, router } from "../context.trpc";
 import { db } from "../db/db.config";
-import { connect } from "http2";
 
 export const NetworkingHubSingleInput = z.object({
     alumniId1: z.string().trim(),
@@ -34,7 +33,7 @@ export const networkingHubController = router({
     //     }),
     getNetworkingHub: protectedProcedure
         .input(NetworkingHubSingleInput)
-        .query(async ({ input, ctx }) => {
+        .query(async ({ input }) => {
             const networkingHub = await db.networking_hub
                 .where({
                     alumniId1: input.alumniId1,
@@ -59,7 +58,7 @@ export const networkingHubController = router({
 
     updateNetworkingHub: protectedProcedure
         .input(NetworkingHubUpdateConnectedInput)
-        .query(async ({ input, ctx }) => {
+        .query(async ({ input }) => {
             const networkingHub = await db.networking_hub
                 .where({
                     connectionId: input.connectionId,
@@ -72,7 +71,7 @@ export const networkingHubController = router({
         }),
     deleteNetworkingHub: protectedProcedure
         .input(NetworkingHubDelete)
-        .query(async ({ input, ctx }) => {
+        .query(async ({ input }) => {
             const networkingHub = await db.networking_hub
                 .where({
                     connectionId: input.connectionId,

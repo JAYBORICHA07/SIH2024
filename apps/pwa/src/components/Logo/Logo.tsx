@@ -1,7 +1,6 @@
-import { Flex, FlexProps, theme, Typography } from "antd";
+import { Flex, FlexProps, } from "antd";
 import { Link } from "react-router-dom";
 import { CSSProperties, useEffect, useState } from "react";
-import { APP_NAME } from "@/appConfig";
 import { ThemeMode } from "@/types/enum";
 import { useSettings } from "@/store/settingStore";
 
@@ -18,15 +17,10 @@ type LogoProps = {
 
 export const Logo = ({
   asLink,
-  color,
   href,
   imgSize,
-  bgColor,
   ...others
 }: LogoProps) => {
-  const {
-    token: { borderRadius },
-  } = theme.useToken();
 
   const settings = useSettings()
   const { themeMode } = settings;
