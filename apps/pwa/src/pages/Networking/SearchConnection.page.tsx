@@ -22,6 +22,7 @@ export interface ConnectionUser extends User {
     send: boolean;
 }
 
+console.info("Jay was here")
 export const SearchConnection: React.FC = () => {
     const [users, setUsers] = useState<ConnectionUser[]>([]);
     const [searchString, setSearchString] = useState('');
